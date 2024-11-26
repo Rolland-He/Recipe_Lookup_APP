@@ -1,4 +1,4 @@
-package view.ui_components.main_page_cocktail;
+package view.ui_components.main_page;
 
 import javax.swing.*;
 import java.awt.*;

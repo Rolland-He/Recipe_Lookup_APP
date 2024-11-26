@@ -1,4 +1,4 @@
-package use_case.bookmarkRecipe;
+package use_case.bookmark_recipe;
 
 import java.util.List;
 

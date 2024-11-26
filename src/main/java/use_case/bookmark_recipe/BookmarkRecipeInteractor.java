@@ -1,4 +1,4 @@
-package use_case.bookmarkRecipe;
+package use_case.bookmark_recipe;
 
 import entities.recipe.Recipe;
 import use_case.search_recipes.SearchRecipeDataAccessInterface;
