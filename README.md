@@ -1,7 +1,7 @@
 # Recipe Lookup App
 ## CSC207 Final Project
 
-### Description
+### Description 
 The Recipe Lookup App allows users to explore, manage, and create recipes through a personalized and user-friendly interface. 
 Users can sign up, log in, and access features such as searching recipes, exploring by ingredients, bookmarking favorites, and even drafting their own recipes. 
 Designed with accessibility in mind, the app provides seamless navigation and interactivity.
