@@ -1,7 +1,5 @@
 package entities.recipe;
 
-import com.sun.jna.Union;
-
 import java.util.List;
 
 /**
@@ -25,7 +23,6 @@ public interface Recipe {
      * returns the instruction of recipe.
      * @return instruction of recipe.
      */
-
     String getInstruction();
 
     /**
@@ -53,9 +50,8 @@ public interface Recipe {
     String getVideoLink();
 
     /**
-     * returns the
-     * @return
+     * IsAlcoholic of the recipe.
+     * @return IsAlcoholic recipe video.
      */
-
-    String getMealId();
+    String getIsAlcoholic();
 }
