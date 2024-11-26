@@ -2,10 +2,8 @@ package app;
 
 import app.usecase_factory.*;
 import data_access.CocktailDataAccessObject;
-import data_access.MealDataAccessObject;
 import data_access.UserDataAccessObject;
 import entities.recipe.factory.CocktailFactory;
-import entities.recipe.factory.MealFactory;
 import entities.recipe.factory.RecipeFactory;
 import entities.user.factory.CommonUserFactory;
 import entities.user.factory.UserFactory;
@@ -68,12 +66,10 @@ public class MainApp {
         // Entity Factories
         final RecipeFactory recipeFactory = new CocktailFactory();
         final UserFactory userFactory = new CommonUserFactory();
-        final MealFactory mealFactory = new MealFactory();
 
         // api/database initialization
         final CocktailDataAccessObject cocktailDataAccessObject = new CocktailDataAccessObject(recipeFactory);
         final UserDataAccessObject userDataAccessObject = new UserDataAccessObject(userFactory, recipeFactory);
-        final MealDataAccessObject mealDataAccessObject = new MealDataAccessObject(mealFactory);
 
         // View Model initialization
         final SignupViewModel signupViewModel = new SignupViewModel();
