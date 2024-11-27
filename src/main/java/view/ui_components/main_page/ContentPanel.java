@@ -1,12 +1,14 @@
 package view.ui_components.main_page;
 
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import interface_adapter.home_page.HomePageController;
 import interface_adapter.home_page.HomePageState;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.services.ServiceManager;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * The panel that contains the contents to be shown in the main page.
@@ -15,6 +17,8 @@ import java.awt.*;
  *  BookmarkedRecipes
  */
 public class ContentPanel extends JPanel {
+    public static final int CONTENT_PANEL_HGAP = 10;
+    public static final int CONTENT_PANEL_VGAP = 10;
     private final RecommendedPanel recommendedPanel;
     private final BookmarkedPanel bookmarkedPanel;
 
@@ -31,7 +35,7 @@ public class ContentPanel extends JPanel {
         this.homePageController = homePageController;
         this.serviceManager = serviceManager;
 
-        setLayout(new GridLayout(0, 1, 10, 10));
+        setLayout(new GridLayout(0, 1, CONTENT_PANEL_HGAP, CONTENT_PANEL_VGAP));
 
         scrollPane = new JScrollPane(this,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

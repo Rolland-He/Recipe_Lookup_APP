@@ -1,17 +1,37 @@
 package view.ui_components.custom_recipe;
 
-import interface_adapter.custom_recipe.CustomRecipeController;
-import interface_adapter.custom_recipe.CustomRecipeViewModel;
-
-import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import interface_adapter.custom_recipe.CustomRecipeController;
+import interface_adapter.custom_recipe.CustomRecipeViewModel;
+
 public class CustomIngredientsPanel extends JPanel {
+    public static final int BACKGROUND_COLOR_R = 255;
+    public static final int BACKGROUND_COLOR_G = 165;
+    public static final int BACKGROUND_COLOR_B = 0;
+    public static final int BORDER_COLOR_G = 87;
+    public static final int BORDER_COLOR_B = 34;
+    public static final int BORDER_COLOR_R = 255;
+    public static final int ROW_PANEL_BACKGROUND_COLOR_G = 140;
+    public static final int BUTTON_BACKGROUND_COLOR_R = 34;
+    public static final int BUTTON_BACKGROUND_COLOR_G = 139;
+    public static final int BUTTON_BACKGROUND_COLOR_B = 34;
+    public static final int BUTTON_BACKGROUND_COLOR_G_69 = 69;
+    public static final int TEN = 10;
     private final CustomRecipeController controller;
     private final CustomRecipeViewModel viewModel;
 
@@ -20,8 +40,9 @@ public class CustomIngredientsPanel extends JPanel {
         this.viewModel = viewModel;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(255, 165, 0));
-        setBorder(createRoundedBorder("Ingredients and Measurements", new Color(255, 87, 34)));
+        setBackground(new Color(BACKGROUND_COLOR_R, BACKGROUND_COLOR_G, BACKGROUND_COLOR_B));
+        setBorder(createRoundedBorder("Ingredients and Measurements", new Color(
+                BORDER_COLOR_R, BORDER_COLOR_G, BORDER_COLOR_B)));
 
         // Initialize the interface
         refreshIngredients();
@@ -42,26 +63,31 @@ public class CustomIngredientsPanel extends JPanel {
     }
 
     /**
-     * Create an ingredient row
+     * Create an ingredient row.
+     * @param ingredient the name of the ingredient
+     * @param measurement the measurement of the ingredient
+     * @param index the index of the row
+     * @return the row panel
      */
     private JPanel createRow(String ingredient, String measurement, int index) {
         final JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        rowPanel.setBackground(new Color(255, 140, 0));
+        rowPanel.setBackground(new Color(BACKGROUND_COLOR_R, ROW_PANEL_BACKGROUND_COLOR_G, BACKGROUND_COLOR_B));
 
         // Ingredient name and measurement input fields
-        final JTextField ingredientField = new JTextField(ingredient, 10);
-        final JTextField measurementField = new JTextField(measurement, 10);
+        final JTextField ingredientField = new JTextField(ingredient, TEN);
+        final JTextField measurementField = new JTextField(measurement, TEN);
 
         // Add button
         final JButton addButton = new JButton("+");
-        addButton.setBackground(new Color(34, 139, 34));
+        addButton.setBackground(new Color(
+                BUTTON_BACKGROUND_COLOR_R, BUTTON_BACKGROUND_COLOR_G, BUTTON_BACKGROUND_COLOR_B));
         addButton.setForeground(Color.WHITE);
         addButton.addActionListener(event -> {
         });
 
         // Remove button
         final JButton removeButton = new JButton("-");
-        removeButton.setBackground(new Color(255, 69, 0));
+        removeButton.setBackground(new Color(BACKGROUND_COLOR_R, BUTTON_BACKGROUND_COLOR_G_69, BACKGROUND_COLOR_B));
         removeButton.setForeground(Color.WHITE);
         removeButton.addActionListener(event -> {
             refreshIngredients();
@@ -89,7 +115,7 @@ public class CustomIngredientsPanel extends JPanel {
         );
         return BorderFactory.createCompoundBorder(
                 titledBorder,
-                new EmptyBorder(10, 10, 10, 10)
+                new EmptyBorder(TEN, TEN, TEN, TEN)
         );
     }
 }

@@ -1,13 +1,20 @@
 package view.ui_components.main_page;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.List;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import entities.recipe.Recipe;
 import interface_adapter.home_page.HomePageController;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.services.ServiceManager;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
 
 /**
  * The panel where the bookmarked recipes will show.
@@ -45,7 +52,8 @@ public class BookmarkedPanel extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, TITLE_BOX_HEIGHT)));
 
         // Panel for recommendation recipes
-        this.recipesPanel = new JPanel(new GridLayout(1, RECIPE_PANEL_COLS, RECIPE_PANEL_HORIZONTAL_GAP, RECIPE_PANEL_VERTICAL_GAP));
+        this.recipesPanel = new JPanel(new GridLayout(
+                1, RECIPE_PANEL_COLS, RECIPE_PANEL_HORIZONTAL_GAP, RECIPE_PANEL_VERTICAL_GAP));
         recipesPanel.setBackground(Color.WHITE);
 
         this.add(recipesPanel);

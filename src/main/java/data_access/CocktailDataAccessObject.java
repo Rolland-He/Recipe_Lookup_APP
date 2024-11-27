@@ -4,22 +4,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.recipe.Ingredient;
-import entities.recipe.factory.CocktailFactory;
-import entities.recipe.factory.RecipeFactory;
-import data_access.exceptions.IdentifierOverlap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import data_access.exceptions.IdentifierOverlap;
+import entities.recipe.Ingredient;
 import entities.recipe.Recipe;
-import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
-import use_case.random_recipes.RandomRecipeDataAccessInterface;
-import use_case.view_recipe.ViewRecipeDataAccessInterface;
-import use_case.search_recipes.SearchRecipeDataAccessInterface;
+import entities.recipe.factory.RecipeFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
+import use_case.random_recipes.RandomRecipeDataAccessInterface;
+import use_case.search_recipes.SearchRecipeDataAccessInterface;
+import use_case.view_recipe.ViewRecipeDataAccessInterface;
 
 /**
  * The Data Access Object for recipe api.
@@ -33,8 +32,6 @@ public class CocktailDataAccessObject implements
     private static final int START = 1;
     private static final int END = 15;
     private final RecipeFactory cocktailFactory;
-
-
 
     public CocktailDataAccessObject(RecipeFactory cocktailFactory) {
         this.cocktailFactory = cocktailFactory;
@@ -97,7 +94,8 @@ public class CocktailDataAccessObject implements
     public List<Recipe> exploreRecipeByIngredients(String ingredient) {
         // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
         final List<Recipe> recipes = new ArrayList<>();
-        final JSONObject responseBody = makeApiRequest(String.format("%s/filter.php?i=%s", COCKTAIL_API_URL, ingredient));
+        final JSONObject responseBody = makeApiRequest(String.format(
+                "%s/filter.php?i=%s", COCKTAIL_API_URL, ingredient));
         final JSONArray cocktails = getCocktails(responseBody);
 
         for (int i = 0; i < cocktails.length(); i++) {
@@ -228,14 +226,14 @@ public class CocktailDataAccessObject implements
         }
     }
 
-    public static void main(String[] args) {
-        final List<String> ingredientsToAvoid = List.of("Salt");
-        final RecipeFactory recipeFactory = new CocktailFactory();
-        final CocktailDataAccessObject cocktailDataAccessObject = new CocktailDataAccessObject(recipeFactory);
-
-        final List<Recipe> recipes = cocktailDataAccessObject.searchRecipeByKeyword("egg");
-        System.out.println("Before: \n" + recipes);
-        cocktailDataAccessObject.filterRecipes(recipes, ingredientsToAvoid);
-        System.out.println("After: \n" + recipes);
-    }
+    //    public static void main(String[] args) {
+    //        final List<String> ingredientsToAvoid = List.of("Salt");
+    //        final RecipeFactory recipeFactory = new CocktailFactory();
+    //        final CocktailDataAccessObject cocktailDataAccessObject = new CocktailDataAccessObject(recipeFactory);
+    //
+    //        final List<Recipe> recipes = cocktailDataAccessObject.searchRecipeByKeyword("egg");
+    //        System.out.println("Before: \n" + recipes);
+    //        cocktailDataAccessObject.filterRecipes(recipes, ingredientsToAvoid);
+    //        System.out.println("After: \n" + recipes);
+    //    }
 }

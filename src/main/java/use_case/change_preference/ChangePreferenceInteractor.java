@@ -21,8 +21,8 @@ public class ChangePreferenceInteractor implements ChangePreferenceInputBoundary
         final List<String> ingredientsToAvoid = inputData.getIngredientsToAvoid();
 
         changePreferenceDataAccessObject.changeIngredientsToAvoid(username, ingredientsToAvoid);
-//        final ChangePreferenceOutputData outputData = new ChangePreferenceOutputData();
-//        changePreferencePresenter.prepareSuccess(outputData);
+        // final ChangePreferenceOutputData outputData = new ChangePreferenceOutputData();
+        // changePreferencePresenter.prepareSuccess(outputData);
     }
 
     @Override
