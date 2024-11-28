@@ -23,7 +23,6 @@ import view.ui_components.preference_view.TitlePanel;
  * Preference view that lets the user change their preference.
  */
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
-
     private final String viewName = "preference";
     private final PreferenceController preferenceController;
     private final PreferenceViewModel preferenceViewModel;
@@ -45,7 +44,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         preferenceViewModel.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
-        setBackground(new Color(40, 40, 40)); // Dark gray background
+        setBackground(new Color(40, 40, 40));
 
         goHomeButton = new JButton("Go Home");
         updatePreferenceButton = new JButton("Update Preference");

@@ -2,8 +2,13 @@ package view.ui_components.custom_recipe;
 
 import java.awt.*;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+/**
+ * RecipeNamePanel.
+ */
 public class RecipeNamePanel extends JPanel {
     private final JTextField nameField;
 

@@ -1,26 +1,34 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
 import interface_adapter.services.ServiceManager;
 import view.concrete_page.RecipeDetailConcrete;
-import view.ui_components.recipe_detail.*;
-
+import view.ui_components.recipe_detail.IngredientPanel;
+import view.ui_components.recipe_detail.InstructionPanel;
+import view.ui_components.recipe_detail.IsAlcoholicPanel;
+import view.ui_components.recipe_detail.NavigationActionPanel;
+import view.ui_components.recipe_detail.RecipeTitlePanel;
+import view.ui_components.recipe_detail.VideoPanel;
 
 /**
  * Recipe Detail View that shows the information about a selected recipe.
  */
 public class RecipeDetailView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String view_name = "recipe detail";
+    private final String viewName = "recipe detail";
 
     private final JButton backButton = new JButton("<");
     private final JButton bookmarkButton = new JButton("Bookmark!");
@@ -31,6 +39,13 @@ public class RecipeDetailView extends JPanel implements ActionListener, Property
     private final ServiceManager serviceManager;
     private final RecipeDetailController recipeDetailController;
 
+    /**
+     * Creates the Recipe Detail View, displaying detailed information about the recipe.
+     *
+     * @param recipeDetailViewModel  the view model managing state, must not be null
+     * @param recipeDetailController the controller for user actions, must not be null
+     * @param serviceManager         the service manager, must not be null
+     */
     public RecipeDetailView(RecipeDetailViewModel recipeDetailViewModel,
                             RecipeDetailController recipeDetailController,
                             ServiceManager serviceManager) {
@@ -58,7 +73,7 @@ public class RecipeDetailView extends JPanel implements ActionListener, Property
             }
         };
 
-        final ActionListener bookMarkListener = event -> {
+        final ActionListener bookmarkListener = event -> {
             if (event.getSource().equals(bookmarkButton)) {
                 final RecipeDetailState recipeDetailState = recipeDetailViewModel.getState();
                 recipeDetailController.bookmarkRecipe(
@@ -67,7 +82,7 @@ public class RecipeDetailView extends JPanel implements ActionListener, Property
         };
 
         backButton.addActionListener(switchToSearchListener);
-        bookmarkButton.addActionListener(bookMarkListener);
+        bookmarkButton.addActionListener(bookmarkListener);
 
         // Set main layout
         setLayout(new BorderLayout());
@@ -92,16 +107,15 @@ public class RecipeDetailView extends JPanel implements ActionListener, Property
 
     @Override
     public void actionPerformed(ActionEvent event) {
-
+        // No additional actions required at this time.
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         final RecipeDetailState state = (RecipeDetailState) event.getNewValue();
-        if (event.getPropertyName().equals("state")) {
+        if ("state".equals(event.getPropertyName())) {
             pageHandler.update(state);
-        }
-        else if (event.getPropertyName().equals("bookmark")) {
+        } else if ("bookmark".equals(event.getPropertyName())) {
             String message = "bookmarked";
             if (!state.getIsBookmarked()) {
                 message = "un-" + message;
@@ -113,6 +127,6 @@ public class RecipeDetailView extends JPanel implements ActionListener, Property
     }
 
     public String getViewName() {
-        return view_name;
+        return viewName;
     }
 }

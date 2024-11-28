@@ -1,13 +1,17 @@
 package view.ui_components.explore_ingredient;
 
-import entities.recipe.Ingredient;
-import entities.recipe.Recipe;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.*;
+
+import entities.recipe.Ingredient;
+import entities.recipe.Recipe;
+
+/**
+ * RecipeDetailPanel.
+ */
 public class RecipeDetailPanel extends JPanel {
     private static final int PANEL_WIDTH = 600;
     private static final int PANEL_HEIGHT = 800;
@@ -22,8 +26,8 @@ public class RecipeDetailPanel extends JPanel {
     private static final Color HEADER_COLOR = new Color(33, 37, 41);
     private static final Color TEXT_COLOR = new Color(73, 80, 87);
     private static final Color INGREDIENT_BG = new Color(233, 236, 239);
-    private static final Color STEP_NUMBER_COLOR = new Color(51, 122, 183);  // Blue for step numbers
-    private static final Color STEP_BG = new Color(255, 255, 255);  // White background for steps
+    private static final Color STEP_NUMBER_COLOR = new Color(51, 122, 183);
+    private static final Color STEP_BG = new Color(255, 255, 255);
 
     // New fields for navigation
     private Recipe currentRecipe;

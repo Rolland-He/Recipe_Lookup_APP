@@ -1,20 +1,39 @@
 package view.ui_components.explore_ingredient;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import entities.recipe.Recipe;
 import interface_adapter.services.ServiceManager;
 
+/**
+ * A scrollable panel to display a list of recipes with the option to explore ingredients.
+ */
 public class RecipeScrollPanel extends JPanel {
     private static final int ROW = 0;
     private static final int COL = 2;
     private static final int H_GAP = 10;
     private static final int V_GAP = 10;
-    private static final int RECOMMENDATIONS_COUNT = 3;
+    private static final int WELCOME_FONT_SIZE = 24;
+    private static final int NO_RESULT_FONT_SIZE = 18;
+    private static final int PANEL_WIDTH = 600;
+    private static final int PANEL_HEIGHT = 400;
+    private static final int RIGID_AREA_HEIGHT = 20;
+    private static final Color WELCOME_FONT_COLOR = new Color(108, 117, 125);
+    private static final String FONT_NAME = "SansSerif";
 
     private final JPanel recipePanel;
     private final JScrollPane scrollPane;
@@ -24,6 +43,11 @@ public class RecipeScrollPanel extends JPanel {
     private List<Recipe> currentRecipes = new ArrayList<>();
     private int currentRecipeIndex = -1;
 
+    /**
+     * Creates the RecipeScrollPanel to display recipes in a scrollable panel.
+     *
+     * @param serviceManager the service manager for recipe services, must not be null.
+     */
     public RecipeScrollPanel(ServiceManager serviceManager) {
         this.serviceManager = serviceManager;
 
@@ -42,12 +66,17 @@ public class RecipeScrollPanel extends JPanel {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         add(scrollPane, BorderLayout.CENTER);
-        scrollPane.setPreferredSize(new Dimension(600, 400));
+        scrollPane.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
         // Add initial empty state
         showEmptyState();
     }
 
+    /**
+     * Displays a list of recipes in the panel.
+     *
+     * @param recipes the list of recipes to display, may be null or empty.
+     */
     public void displayRecipes(List<Recipe> recipes) {
         this.currentRecipes = recipes;
         recipePanel.removeAll();
@@ -56,13 +85,10 @@ public class RecipeScrollPanel extends JPanel {
         if (recipes == null || recipes.isEmpty()) {
             if (!isExploreMode) {
                 showEmptyState();
-            }
-            else {
-                // Show "No results found" message for explore mode
+            } else {
                 showNoResultsMessage();
             }
-        }
-        else {
+        } else {
             final List<JPanel> recipePanels = parseToPanel(recipes);
             for (JPanel recipe : recipePanels) {
                 recipePanel.add(recipe);
@@ -79,8 +105,8 @@ public class RecipeScrollPanel extends JPanel {
         final JPanel messagePanel = new JPanel(new GridBagLayout());
         messagePanel.setBackground(Color.WHITE);
         final JLabel messageLabel = new JLabel("No cocktails found with this ingredient");
-        messageLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        messageLabel.setForeground(new Color(108, 117, 125));
+        messageLabel.setFont(new Font(FONT_NAME, Font.BOLD, NO_RESULT_FONT_SIZE));
+        messageLabel.setForeground(WELCOME_FONT_COLOR);
         messagePanel.add(messageLabel);
 
         recipePanel.add(Box.createVerticalGlue());
@@ -88,6 +114,9 @@ public class RecipeScrollPanel extends JPanel {
         recipePanel.add(Box.createVerticalGlue());
     }
 
+    /**
+     * Clears all recipes from the panel.
+     */
     public void clearRecipes() {
         if (!isExploreMode) {
             recipePanel.removeAll();
@@ -97,6 +126,11 @@ public class RecipeScrollPanel extends JPanel {
         }
     }
 
+    /**
+     * Sets the mode of the panel to explore mode.
+     *
+     * @param exploreMode whether the panel is in explore mode.
+     */
     public void setExploreMode(boolean exploreMode) {
         this.isExploreMode = exploreMode;
         if (exploreMode) {
@@ -110,39 +144,40 @@ public class RecipeScrollPanel extends JPanel {
     }
 
     private void showEmptyState() {
-        // Change layout to BoxLayout for vertical arrangement
         recipePanel.setLayout(new BoxLayout(recipePanel, BoxLayout.Y_AXIS));
 
-        // Welcome message panel
         final JPanel welcomePanel = new JPanel(new GridBagLayout());
         welcomePanel.setBackground(Color.WHITE);
         final JLabel welcomeLabel = new JLabel("Welcome to Recipe Search!");
-        welcomeLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-        welcomeLabel.setForeground(new Color(108, 117, 125));
+        welcomeLabel.setFont(new Font(FONT_NAME, Font.BOLD, WELCOME_FONT_SIZE));
+        welcomeLabel.setForeground(WELCOME_FONT_COLOR);
         welcomePanel.add(welcomeLabel);
 
-        // Search message panel
         final JPanel searchPanel = new JPanel(new GridBagLayout());
         searchPanel.setBackground(Color.WHITE);
         final JLabel searchLabel = new JLabel("Search for recipes!");
-        searchLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-        searchLabel.setForeground(new Color(108, 117, 125));
+        searchLabel.setFont(new Font(FONT_NAME, Font.BOLD, WELCOME_FONT_SIZE));
+        searchLabel.setForeground(WELCOME_FONT_COLOR);
         searchPanel.add(searchLabel);
 
-        // Add all components with glue for spacing
         recipePanel.add(Box.createVerticalGlue());
         recipePanel.add(welcomePanel);
-        recipePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        recipePanel.add(Box.createRigidArea(new Dimension(0, RIGID_AREA_HEIGHT)));
         recipePanel.add(searchPanel);
         recipePanel.add(Box.createVerticalGlue());
     }
 
+    /**
+     * Gets the next recipe in the list relative to the current recipe.
+     *
+     * @param currentRecipe the current recipe, must not be null.
+     * @return the next recipe or null if none is available.
+     */
     public Recipe getNextRecipe(Recipe currentRecipe) {
         if (currentRecipes == null || currentRecipes.isEmpty()) {
             return null;
         }
 
-        // Find current recipe index
         currentRecipeIndex = -1;
         for (int i = 0; i < currentRecipes.size(); i++) {
             if (currentRecipes.get(i).getId() == currentRecipe.getId()) {
@@ -151,7 +186,6 @@ public class RecipeScrollPanel extends JPanel {
             }
         }
 
-        // Return next recipe if available
         if (currentRecipeIndex >= 0 && currentRecipeIndex < currentRecipes.size() - 1) {
             return currentRecipes.get(currentRecipeIndex + 1);
         }
@@ -159,7 +193,6 @@ public class RecipeScrollPanel extends JPanel {
     }
 
     private List<JPanel> parseToPanel(List<Recipe> recipes) {
-        final List<JPanel> panels = new ArrayList<>();
-        return panels;
+        return new ArrayList<>();
     }
 }
