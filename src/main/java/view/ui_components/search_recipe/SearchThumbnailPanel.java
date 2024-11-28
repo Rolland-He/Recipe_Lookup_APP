@@ -27,6 +27,8 @@ public class SearchThumbnailPanel extends JPanel {
     private static final int LEFT = 10;
     private static final int RIGHT = 10;
     private static final int FONT_SIZE = 14;
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 250;
 
     // Colors for modern button styling
     private static final Color BUTTON_BACKGROUND = new Color(51, 122, 183);
@@ -57,7 +59,7 @@ public class SearchThumbnailPanel extends JPanel {
         nameButton = createStyledButton();
 
         // Adjust the panel size
-        setPreferredSize(new Dimension(200, 250));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     private JButton createStyledButton() {

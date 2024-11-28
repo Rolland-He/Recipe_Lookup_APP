@@ -4,26 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import data_access.exceptions.RecipeNotFound;
+import data_access.exceptions.UserNotFound;
 import entities.recipe.Ingredient;
 import entities.recipe.Recipe;
 import entities.recipe.factory.RecipeFactory;
 import entities.user.User;
 import entities.user.factory.UserFactory;
-import data_access.exceptions.RecipeNotFound;
-import data_access.exceptions.UserNotFound;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import use_case.bookmark_recipe.BookmarkRecipeDataAccessInterface;
 import use_case.change_preference.ChangePreferenceDataAccessInterface;
 import use_case.create_recipe.CustomRecipeDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupDataAccessInterface;
 import use_case.user_profile.UserProfileDataAccessInterface;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 
 /**
  * The Data Access Object for users.
@@ -62,6 +63,8 @@ public class UserDataAccessObject implements
     private static final String IS_ALCOHOLIC = "isAlcoholic";
     private static final int MIN_BOUND = 1;
     private static final int MAX_BOUND = 20000;
+    private static final int THREE = 3;
+    private static final int SIX = 6;
 
     private final UserFactory userFactory;
     private final RecipeFactory recipeFactory;
@@ -189,11 +192,11 @@ public class UserDataAccessObject implements
     // TODO: Implement these methods to ensure that inputs are valid.
     //  such that: empty strings are not accepted. Change the filler codes below
     private boolean validateUsername(String username) {
-        return username.length() >= 3;
+        return username.length() >= THREE;
     }
 
     private boolean validatePassword(String password) {
-        return password.length() >= 6;
+        return password.length() >= SIX;
     }
 
     @Override

@@ -1,32 +1,45 @@
 package view.ui_components.user_profile;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * User Icon Panel that stores the username and photo of the user.
  */
 public class UserIconPanel extends JPanel {
+    private static final int GRAY_COLOR = 169;
+    private static final int FONT_SIZE = 18;
+
     private final JLabel userLabel;
     private final JLabel photoLabel;
     private final JButton preferenceButton;
 
     public UserIconPanel(JButton preferenceButton) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setBackground(new Color(169, 169, 169));
+        setBackground(new Color(GRAY_COLOR, GRAY_COLOR, GRAY_COLOR));
 
         this.preferenceButton = preferenceButton;
-        // add user icon
+        // Add user icon
         photoLabel = new JLabel();
         final ImageIcon userPhoto = new ImageIcon(getClass().getResource("/image/icon.jpg"));
         final Image scaledPhoto = userPhoto.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         final ImageIcon roundedPhoto = createRoundedImage(new ImageIcon(scaledPhoto));
         photoLabel.setIcon(roundedPhoto);
 
-        // add username
+        // Add username
         userLabel = new JLabel();
-        userLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        userLabel.setFont(new Font("SansSerif", Font.BOLD, FONT_SIZE));
         userLabel.setForeground(Color.WHITE);
 
         add(photoLabel);
@@ -50,6 +63,7 @@ public class UserIconPanel extends JPanel {
 
     /**
      * Updates the user icon panel components.
+     *
      * @param username the username
      */
     public void updateComponents(String username) {

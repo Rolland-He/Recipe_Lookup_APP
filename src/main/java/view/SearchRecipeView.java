@@ -20,7 +20,8 @@ import view.ui_components.search_recipe.ThumbnailsContainerPanel;
 /**
  * The view when the user searches for a recipe through some text field.
  */
-public class SearchRecipeView extends JPanel implements PageView<SearchRecipeState>, ActionListener, PropertyChangeListener {
+public class SearchRecipeView extends JPanel implements PageView<SearchRecipeState>,
+        ActionListener, PropertyChangeListener {
     private final String viewName = "search recipe";
 
     private final JTextField searchTextField = new JTextField(15);

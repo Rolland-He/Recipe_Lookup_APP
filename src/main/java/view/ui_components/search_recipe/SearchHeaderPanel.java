@@ -1,7 +1,8 @@
 package view.ui_components.search_recipe;
 
-import javax.swing.*;
 import java.awt.*;
+
+import javax.swing.*;
 
 /**
  * A panel that contains a back button, search field, and search button.

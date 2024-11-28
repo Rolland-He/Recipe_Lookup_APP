@@ -3,6 +3,9 @@ package use_case.signup;
 import entities.user.User;
 import entities.user.factory.UserFactory;
 
+/**
+ * SignupInteractor.
+ */
 public class SignupInteractor implements SignupInputBoundary {
     private final SignupDataAccessInterface signupDataAccessObject;
     private final SignupOutputBoundary signupPresenter;

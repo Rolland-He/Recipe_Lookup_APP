@@ -1,8 +1,8 @@
 package use_case.user_profile;
 
-import entities.recipe.Recipe;
-
 import java.util.List;
+
+import entities.recipe.Recipe;
 
 /**
  * Output data for the user profile usecase.

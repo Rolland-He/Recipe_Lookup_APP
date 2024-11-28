@@ -8,7 +8,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import entities.recipe.Recipe;
 import interface_adapter.services.ServiceManager;
@@ -23,7 +24,10 @@ import view.ui_components.user_profile.UserIconPanel;
 /**
  * User profile view.
  */
-public class UserProfileView extends JPanel implements PageView<UserProfileState>, ActionListener, PropertyChangeListener {
+public class UserProfileView extends JPanel implements PageView<UserProfileState>,
+        ActionListener,
+        PropertyChangeListener {
+    private static final int BACKGROUND_GRAY = 211;
     private final String viewName = "account";
 
     private final UserProfileViewModel userProfileViewModel;
@@ -45,7 +49,7 @@ public class UserProfileView extends JPanel implements PageView<UserProfileState
         this.userProfileViewModel = userProfileViewModel;
 
         setLayout(new BorderLayout());
-        setBackground(new Color(211, 211, 211));
+        setBackground(new Color(BACKGROUND_GRAY, BACKGROUND_GRAY, BACKGROUND_GRAY));
 
         userProfileViewModel.addPropertyChangeListener(this);
 

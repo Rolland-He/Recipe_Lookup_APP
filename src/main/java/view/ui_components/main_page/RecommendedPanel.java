@@ -1,10 +1,16 @@
 package view.ui_components.main_page;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import entities.recipe.Recipe;
 import interface_adapter.home_page.HomePageController;
@@ -18,14 +24,27 @@ import view.PageView;
  * Panel that contains all the recommended recipes to the user.
  */
 public class RecommendedPanel extends AbstractViewDecorator<HomePageState> {
-    private List<Recipe> recommendedRecipes = new ArrayList<>();
+    private static final int BORDER_SIZE = 10;
+    private static final int HEADER_FONT_SIZE = 20;
+    private static final int GRID_COLUMNS = 3;
+    private static final int GRID_HORIZONTAL_GAP = 10;
+    private static final int GRID_VERTICAL_GAP = 10;
 
+    private List<Recipe> recommendedRecipes = new ArrayList<>();
     private final JPanel gridPanel;
 
     private final HomePageViewModel homePageViewModel;
     private final ServiceManager serviceManager;
     private final HomePageController homePageController;
 
+    /**
+     * Creates the RecommendedPanel with its associated components.
+     *
+     * @param homePageViewModel  the view model for the home page, must not be null
+     * @param homePageController the controller for the home page, must not be null
+     * @param serviceManager     the service manager, must not be null
+     * @param pageView           the page view to decorate, must not be null
+     */
     public RecommendedPanel(HomePageViewModel homePageViewModel,
                             HomePageController homePageController,
                             ServiceManager serviceManager, PageView<HomePageState> pageView) {
@@ -34,15 +53,15 @@ public class RecommendedPanel extends AbstractViewDecorator<HomePageState> {
         this.homePageController = homePageController;
         this.serviceManager = serviceManager;
 
-        setLayout(new BorderLayout(10, 10));
-        this.setBackground(Color.WHITE);
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setLayout(new BorderLayout(BORDER_SIZE, BORDER_SIZE));
+        setBackground(Color.WHITE);
+        setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
 
         final JLabel headerLabel = new JLabel("Recommended Recipes", JLabel.CENTER);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        headerLabel.setFont(new Font("Arial", Font.BOLD, HEADER_FONT_SIZE));
         add(headerLabel, BorderLayout.NORTH);
 
-        gridPanel = new JPanel(new GridLayout(0, 3, 10, 10));
+        gridPanel = new JPanel(new GridLayout(0, GRID_COLUMNS, GRID_HORIZONTAL_GAP, GRID_VERTICAL_GAP));
         final JScrollPane scrollPane = new JScrollPane(gridPanel);
 
         add(scrollPane, BorderLayout.CENTER);

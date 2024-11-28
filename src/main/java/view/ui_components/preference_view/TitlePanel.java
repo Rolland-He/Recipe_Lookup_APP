@@ -1,10 +1,10 @@
 package view.ui_components.preference_view;
 
+import javax.swing.JLabel;
+
 import interface_adapter.preference.PreferenceState;
 import view.AbstractViewDecorator;
 import view.PageView;
-
-import javax.swing.*;
 
 /**
  * Title panel for the preference view.

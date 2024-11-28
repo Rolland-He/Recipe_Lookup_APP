@@ -41,6 +41,8 @@ public class UserProfileRecipeThumbnailPanel extends JPanel {
     private static final Color BUTTON_HOVER = new Color(40, 96, 144);
     private static final Color BUTTON_BORDER = new Color(46, 109, 164);
     private static final Color TEXT_COLOR = Color.WHITE;
+    private static final int HEIGHT = 200;
+    private static final int WIDTH = 250;
 
     private JLabel imageLabel;
     private JButton nameButton;
@@ -52,6 +54,7 @@ public class UserProfileRecipeThumbnailPanel extends JPanel {
     public UserProfileRecipeThumbnailPanel(UserProfileViewModel userProfileViewModel,
                                            UserProfileController userProfileController,
                                            ServiceManager serviceManager) {
+
         this.serviceManager = serviceManager;
         this.userProfileViewModel = userProfileViewModel;
         this.userProfileController = userProfileController;
@@ -65,7 +68,7 @@ public class UserProfileRecipeThumbnailPanel extends JPanel {
         nameButton = createStyledButton();
 
         // Adjust the panel size
-        setPreferredSize(new Dimension(200, 250));
+        setPreferredSize(new Dimension(HEIGHT, WIDTH));
     }
 
     private JButton createStyledButton() {

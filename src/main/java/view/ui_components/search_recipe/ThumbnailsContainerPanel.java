@@ -19,6 +19,8 @@ public class ThumbnailsContainerPanel extends JPanel {
     private static final int COL = 3;
     private static final int H_GAP = 10;
     private static final int V_GAP = 10;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 400;
 
     private final JPanel recipePanel;
     private final SearchRecipeController searchRecipeController;
@@ -53,7 +55,7 @@ public class ThumbnailsContainerPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         // Set panel properties
-        scrollPane.setPreferredSize(new Dimension(600, 400));
+        scrollPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         // Add initial empty state
         clearRecipes();
