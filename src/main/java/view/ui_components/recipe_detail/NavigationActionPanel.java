@@ -1,8 +1,10 @@
 package view.ui_components.recipe_detail;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 
 import interface_adapter.recipe_detail.RecipeDetailState;
 import view.AbstractViewDecorator;

@@ -1,12 +1,15 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -22,9 +25,11 @@ import view.ui_components.search_recipe.ThumbnailsContainerPanel;
  */
 public class SearchRecipeView extends JPanel implements PageView<SearchRecipeState>,
         ActionListener, PropertyChangeListener {
+    private static final int SEARCH_TEXT_FIELD_COLUMNS = 15;
+
     private final String viewName = "search recipe";
 
-    private final JTextField searchTextField = new JTextField(15);
+    private final JTextField searchTextField = new JTextField(SEARCH_TEXT_FIELD_COLUMNS);
 
     private final JButton searchButton;
     private final JButton backButton;

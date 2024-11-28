@@ -61,7 +61,8 @@ public class SimpleRecipeScrollPanel extends JPanel {
 
         if (recipes == null || recipes.isEmpty()) {
             showNoResultsMessage();
-        } else {
+        }
+        else {
             for (SimpleRecipe recipe : recipes) {
                 final SimpleRecipePanel panel = new SimpleRecipePanel(serviceManager);
                 panel.addRecipe(recipe);

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -30,7 +29,6 @@ public class RecommendedPanel extends AbstractViewDecorator<HomePageState> {
     private static final int GRID_HORIZONTAL_GAP = 10;
     private static final int GRID_VERTICAL_GAP = 10;
 
-    private List<Recipe> recommendedRecipes = new ArrayList<>();
     private final JPanel gridPanel;
 
     private final HomePageViewModel homePageViewModel;

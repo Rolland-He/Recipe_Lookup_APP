@@ -85,10 +85,12 @@ public class RecipeScrollPanel extends JPanel {
         if (recipes == null || recipes.isEmpty()) {
             if (!isExploreMode) {
                 showEmptyState();
-            } else {
+            }
+            else {
                 showNoResultsMessage();
             }
-        } else {
+        }
+        else {
             final List<JPanel> recipePanels = parseToPanel(recipes);
             for (JPanel recipe : recipePanels) {
                 recipePanel.add(recipe);
@@ -136,7 +138,8 @@ public class RecipeScrollPanel extends JPanel {
         if (exploreMode) {
             recipePanel.removeAll();
             recipePanel.setLayout(new GridLayout(0, COL, H_GAP, V_GAP));
-        } else {
+        }
+        else {
             clearRecipes();
         }
         recipePanel.revalidate();

@@ -1,6 +1,6 @@
 package view.ui_components.search_recipe;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
