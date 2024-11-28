@@ -1,6 +1,6 @@
 package view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
  * Decorator for gui components of a view.
