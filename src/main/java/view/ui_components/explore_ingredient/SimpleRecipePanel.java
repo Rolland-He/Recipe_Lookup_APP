@@ -1,10 +1,11 @@
 package view.ui_components.explore_ingredient;
 
-import entities.recipe.SimpleRecipe;
-import interface_adapter.services.ServiceManager;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.*;
+
+import entities.recipe.SimpleRecipe;
+import interface_adapter.services.ServiceManager;
 
 public class SimpleRecipePanel extends JPanel {
     private static final int PANEL_WIDTH = 280;
@@ -22,20 +23,20 @@ public class SimpleRecipePanel extends JPanel {
         removeAll();
 
         // Image Panel
-        JPanel imagePanel = new JPanel(new BorderLayout());
+        final JPanel imagePanel = new JPanel(new BorderLayout());
         imagePanel.setBackground(BACKGROUND_COLOR);
-        ImageIcon imageIcon = new ImageIcon(recipe.getImageLink());
-        Image image = imageIcon.getImage().getScaledInstance(PANEL_WIDTH, 240, Image.SCALE_SMOOTH);
-        JLabel imageLabel = new JLabel(new ImageIcon(image));
+        final ImageIcon imageIcon = new ImageIcon(recipe.getImageLink());
+        final Image image = imageIcon.getImage().getScaledInstance(PANEL_WIDTH, 240, Image.SCALE_SMOOTH);
+        final JLabel imageLabel = new JLabel(new ImageIcon(image));
         imagePanel.add(imageLabel, BorderLayout.CENTER);
 
         // Title Panel
-        JPanel titlePanel = new JPanel();
+        final JPanel titlePanel = new JPanel();
         titlePanel.setBackground(Color.WHITE);
         titlePanel.setLayout(new BorderLayout());
         titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel titleLabel = new JLabel(recipe.getName());
+        final JLabel titleLabel = new JLabel(recipe.getName());
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         titlePanel.add(titleLabel, BorderLayout.CENTER);
 

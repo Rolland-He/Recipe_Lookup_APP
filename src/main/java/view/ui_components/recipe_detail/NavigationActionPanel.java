@@ -1,11 +1,12 @@
 package view.ui_components.recipe_detail;
 
+import java.awt.*;
+
+import javax.swing.*;
+
 import interface_adapter.recipe_detail.RecipeDetailState;
 import view.AbstractViewDecorator;
 import view.PageView;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Contains the back button and bookmark button.

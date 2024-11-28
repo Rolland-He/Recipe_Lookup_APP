@@ -1,9 +1,9 @@
 package interface_adapter.user_profile;
 
-import entities.recipe.Recipe;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import entities.recipe.Recipe;
 
 /**
  * State of the user profile.

@@ -1,5 +1,15 @@
 package view;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceState;
 import interface_adapter.preference.PreferenceViewModel;
@@ -8,15 +18,6 @@ import view.concrete_page.PreferenceConcrete;
 import view.ui_components.preference_view.ButtonPanel;
 import view.ui_components.preference_view.IngredientPanel;
 import view.ui_components.preference_view.TitlePanel;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Preference view that lets the user change their preference.

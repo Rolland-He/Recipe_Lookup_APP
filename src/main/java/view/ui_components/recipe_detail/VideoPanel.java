@@ -1,17 +1,16 @@
 package view.ui_components.recipe_detail;
 
+import java.awt.BorderLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import entities.recipe.Recipe;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import interface_adapter.services.ServiceManager;
 import interface_adapter.services.image_service.ImageServiceInterface;
-import interface_adapter.services.image_service.WebImageService;
-import interface_adapter.services.video_service.VideoServiceInterface;
-import interface_adapter.services.video_service.WebVideoService;
 import view.AbstractViewDecorator;
 import view.PageView;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Contains the playable video.

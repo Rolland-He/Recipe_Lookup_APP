@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.*;
 
 import entities.recipe.Recipe;
-import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.search_recipe.SearchRecipeController;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import interface_adapter.services.ServiceManager;

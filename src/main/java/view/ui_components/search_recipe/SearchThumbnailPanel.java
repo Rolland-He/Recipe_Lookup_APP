@@ -1,20 +1,20 @@
 package view.ui_components.search_recipe;
 
-import entities.recipe.Recipe;
-import interface_adapter.recipe_detail.RecipeDetailController;
-import interface_adapter.search_recipe.SearchRecipeController;
-import interface_adapter.search_recipe.SearchRecipeViewModel;
-import interface_adapter.services.ServiceManager;
-import interface_adapter.services.image_service.ImageServiceInterface;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+import entities.recipe.Recipe;
+import interface_adapter.search_recipe.SearchRecipeController;
+import interface_adapter.search_recipe.SearchRecipeViewModel;
+import interface_adapter.services.ServiceManager;
+import interface_adapter.services.image_service.ImageServiceInterface;
 
 /**
  * Recipe Panel that shows when searching for recipes.
@@ -29,9 +29,9 @@ public class SearchThumbnailPanel extends JPanel {
     private static final int FONT_SIZE = 14;
 
     // Colors for modern button styling
-    private static final Color BUTTON_BACKGROUND = new Color(51, 122, 183);  // Nice blue
-    private static final Color BUTTON_HOVER = new Color(40, 96, 144);        // Darker blue for hover
-    private static final Color BUTTON_BORDER = new Color(46, 109, 164);      // Border blue
+    private static final Color BUTTON_BACKGROUND = new Color(51, 122, 183);
+    private static final Color BUTTON_HOVER = new Color(40, 96, 144);
+    private static final Color BUTTON_BORDER = new Color(46, 109, 164);
     private static final Color TEXT_COLOR = Color.WHITE;
 
     private JLabel imageLabel;

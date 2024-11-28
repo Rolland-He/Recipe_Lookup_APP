@@ -1,5 +1,13 @@
 package view;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.*;
+
 import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
@@ -7,12 +15,6 @@ import interface_adapter.services.ServiceManager;
 import view.concrete_page.RecipeDetailConcrete;
 import view.ui_components.recipe_detail.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Recipe Detail View that shows the information about a selected recipe.

@@ -1,5 +1,11 @@
 package view.ui_components.main_page;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+
 import entities.recipe.Recipe;
 import interface_adapter.home_page.HomePageController;
 import interface_adapter.home_page.HomePageState;
@@ -7,11 +13,6 @@ import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.services.ServiceManager;
 import view.AbstractViewDecorator;
 import view.PageView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Panel that contains all the recommended recipes to the user.

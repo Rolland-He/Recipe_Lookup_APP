@@ -1,22 +1,24 @@
 package view.views_placeholder;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import javax.swing.*;
+
 import entities.recipe.Recipe;
 import interface_adapter.services.ServiceManager;
 import interface_adapter.user_profile.UserProfileController;
 import interface_adapter.user_profile.UserProfileState;
 import interface_adapter.user_profile.UserProfileViewModel;
 import view.PageView;
-import view.ui_components.user_profile.UserIconPanel;
 import view.ui_components.user_profile.CustomRecipePanel;
 import view.ui_components.user_profile.ReturnButtonPanel;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
+import view.ui_components.user_profile.UserIconPanel;
 
 /**
  * User profile view.

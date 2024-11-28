@@ -1,6 +1,6 @@
 package interface_adapter.services.video_service;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 
 /**
  * Video Service Interface that retrieves video to be played.

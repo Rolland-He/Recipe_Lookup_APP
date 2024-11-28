@@ -1,7 +1,8 @@
 package view.ui_components.custom_recipe;
 
-import javax.swing.*;
 import java.awt.*;
+
+import javax.swing.*;
 
 public class RecipeNamePanel extends JPanel {
     private final JTextField nameField;

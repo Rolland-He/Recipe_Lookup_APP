@@ -1,13 +1,12 @@
 package view.ui_components.explore_ingredient;
 
-import entities.recipe.Recipe;
-import entities.recipe.SimpleRecipe;
-import interface_adapter.services.ServiceManager;
+import java.awt.*;
+import java.util.List;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import entities.recipe.SimpleRecipe;
+import interface_adapter.services.ServiceManager;
 
 public class SimpleRecipeScrollPanel extends JPanel {
     private static final int GRID_COLS = 2;
@@ -26,7 +25,7 @@ public class SimpleRecipeScrollPanel extends JPanel {
         recipePanel = new JPanel(new GridLayout(0, GRID_COLS, H_GAP, V_GAP));
         recipePanel.setBackground(Color.WHITE);
 
-        JScrollPane scrollPane = new JScrollPane(recipePanel);
+        final JScrollPane scrollPane = new JScrollPane(recipePanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -40,9 +39,10 @@ public class SimpleRecipeScrollPanel extends JPanel {
 
         if (recipes == null || recipes.isEmpty()) {
             showNoResultsMessage();
-        } else {
+        }
+        else {
             for (SimpleRecipe recipe : recipes) {
-                SimpleRecipePanel panel = new SimpleRecipePanel(serviceManager);
+                final SimpleRecipePanel panel = new SimpleRecipePanel(serviceManager);
                 panel.addRecipe(recipe);
                 recipePanel.add(panel);
             }
@@ -54,7 +54,7 @@ public class SimpleRecipeScrollPanel extends JPanel {
 
     private void showNoResultsMessage() {
         recipePanel.setLayout(new BorderLayout());
-        JLabel messageLabel = new JLabel("No cocktails found with this ingredient");
+        final JLabel messageLabel = new JLabel("No cocktails found with this ingredient");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         messageLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
         messageLabel.setForeground(new Color(108, 117, 125));

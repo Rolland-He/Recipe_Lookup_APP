@@ -1,5 +1,9 @@
 package app;
 
+import java.awt.*;
+
+import javax.swing.*;
+
 import app.usecase_factory.*;
 import data_access.CocktailDataAccessObject;
 import data_access.UserDataAccessObject;
@@ -24,9 +28,6 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.user_profile.UserProfileViewModel;
 import view.*;
 import view.views_placeholder.*;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Main Application Interface.

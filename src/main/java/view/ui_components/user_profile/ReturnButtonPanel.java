@@ -1,8 +1,8 @@
 package view.ui_components.user_profile;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+
+import javax.swing.*;
 
 public class ReturnButtonPanel extends JPanel {
 

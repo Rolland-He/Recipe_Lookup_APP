@@ -1,24 +1,21 @@
 package view;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.stream.Collectors;
-
-import entities.recipe.Recipe;
 import interface_adapter.search_recipe.SearchRecipeController;
 import interface_adapter.search_recipe.SearchRecipeState;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import interface_adapter.services.ServiceManager;
-import view.ui_components.search_recipe.ThumbnailsContainerPanel;
 import view.ui_components.search_recipe.SearchHeaderPanel;
+import view.ui_components.search_recipe.ThumbnailsContainerPanel;
 
 /**
  * The view when the user searches for a recipe through some text field.

@@ -1,6 +1,5 @@
 package use_case.view_recipe;
 
-
 import use_case.bookmark_recipe.BookmarkRecipeOutputData;
 
 /**

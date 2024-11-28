@@ -1,13 +1,13 @@
 package view.ui_components.explore_ingredient;
 
-import data_access.CocktailDataAccessObject;
-import entities.recipe.Recipe;
-import interface_adapter.services.ServiceManager;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.*;
+
+import entities.recipe.Recipe;
+import interface_adapter.services.ServiceManager;
 
 public class RecipeScrollPanel extends JPanel {
     private static final int ROW = 0;
@@ -19,7 +19,7 @@ public class RecipeScrollPanel extends JPanel {
     private final JPanel recipePanel;
     private final JScrollPane scrollPane;
     private final ServiceManager serviceManager;
-    private boolean isExploreMode = false;
+    private boolean isExploreMode;
 
     private List<Recipe> currentRecipes = new ArrayList<>();
     private int currentRecipeIndex = -1;
@@ -49,9 +49,9 @@ public class RecipeScrollPanel extends JPanel {
     }
 
     public void displayRecipes(List<Recipe> recipes) {
-        this.currentRecipes = recipes; // Store the current recipes
+        this.currentRecipes = recipes;
         recipePanel.removeAll();
-        recipePanel.setLayout(new GridLayout(0, COL, H_GAP, V_GAP));  // Reset to grid layout
+        recipePanel.setLayout(new GridLayout(0, COL, H_GAP, V_GAP));
 
         if (recipes == null || recipes.isEmpty()) {
             if (!isExploreMode) {
@@ -76,9 +76,9 @@ public class RecipeScrollPanel extends JPanel {
     private void showNoResultsMessage() {
         recipePanel.setLayout(new BoxLayout(recipePanel, BoxLayout.Y_AXIS));
 
-        JPanel messagePanel = new JPanel(new GridBagLayout());
+        final JPanel messagePanel = new JPanel(new GridBagLayout());
         messagePanel.setBackground(Color.WHITE);
-        JLabel messageLabel = new JLabel("No cocktails found with this ingredient");
+        final JLabel messageLabel = new JLabel("No cocktails found with this ingredient");
         messageLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
         messageLabel.setForeground(new Color(108, 117, 125));
         messagePanel.add(messageLabel);
@@ -114,17 +114,17 @@ public class RecipeScrollPanel extends JPanel {
         recipePanel.setLayout(new BoxLayout(recipePanel, BoxLayout.Y_AXIS));
 
         // Welcome message panel
-        JPanel welcomePanel = new JPanel(new GridBagLayout());
+        final JPanel welcomePanel = new JPanel(new GridBagLayout());
         welcomePanel.setBackground(Color.WHITE);
-        JLabel welcomeLabel = new JLabel("Welcome to Recipe Search!");
+        final JLabel welcomeLabel = new JLabel("Welcome to Recipe Search!");
         welcomeLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         welcomeLabel.setForeground(new Color(108, 117, 125));
         welcomePanel.add(welcomeLabel);
 
         // Search message panel
-        JPanel searchPanel = new JPanel(new GridBagLayout());
+        final JPanel searchPanel = new JPanel(new GridBagLayout());
         searchPanel.setBackground(Color.WHITE);
-        JLabel searchLabel = new JLabel("Search for recipes!");
+        final JLabel searchLabel = new JLabel("Search for recipes!");
         searchLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         searchLabel.setForeground(new Color(108, 117, 125));
         searchPanel.add(searchLabel);
@@ -160,11 +160,6 @@ public class RecipeScrollPanel extends JPanel {
 
     private List<JPanel> parseToPanel(List<Recipe> recipes) {
         final List<JPanel> panels = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-//            final SearchRecipePanel srp = new SearchRecipePanel(serviceManager);
-//            srp.addRecipe(recipe);
-//            panels.add(srp);
-        }
         return panels;
     }
 }

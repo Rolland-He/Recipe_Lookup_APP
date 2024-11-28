@@ -1,25 +1,28 @@
 package view.ui_components.user_profile;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import entities.recipe.Recipe;
-import interface_adapter.custom_recipe.CustomRecipeController;
-import interface_adapter.custom_recipe.CustomRecipeViewModel;
-import interface_adapter.home_page.HomePageController;
-import interface_adapter.home_page.HomePageViewModel;
-import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.services.ServiceManager;
 import interface_adapter.services.image_service.ImageServiceInterface;
 import interface_adapter.user_profile.UserProfileController;
 import interface_adapter.user_profile.UserProfileViewModel;
-import view.views_placeholder.CustomRecipeView;
-
-import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Recipe Panel that shows when searching for recipes.
