@@ -23,7 +23,7 @@ import use_case.view_recipe.ViewRecipeInteractor;
 import view.views_placeholder.HomeView;
 
 /**
- * home page factory that creates necessary usecases.
+ * Home page factory that creates necessary usecase.
  */
 public final class HomeUseCaseFactory {
     private HomeUseCaseFactory() {
@@ -88,7 +88,7 @@ public final class HomeUseCaseFactory {
                 homePagePresenter, userDataAccessObject
         );
         final CustomRecipeInputBoundary customRecipeInteractor = new CustomRecipeInteractor(
-                userDataAccessObject, cocktailDataAccessObject, homePagePresenter
+                userDataAccessObject, homePagePresenter
         );
 
         return new HomePageController(viewRecipeInteractor, exploreIngredientInteractor,

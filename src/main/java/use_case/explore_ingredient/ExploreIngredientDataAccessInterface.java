@@ -4,6 +4,9 @@ import java.util.List;
 
 import entities.recipe.Recipe;
 
+/**
+ * Explores recipes by ingredients DAO.
+ */
 public interface ExploreIngredientDataAccessInterface {
     /**
      * Gets a simplified list of recipes containing the specified ingredient.

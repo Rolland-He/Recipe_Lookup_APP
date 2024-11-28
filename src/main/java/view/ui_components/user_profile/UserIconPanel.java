@@ -4,14 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * User Icon Panel that stores the username and photo of the user.
+ */
 public class UserIconPanel extends JPanel {
-    final private JLabel userLabel;
-    final private JLabel photoLabel;
+    private final JLabel userLabel;
+    private final JLabel photoLabel;
+    private final JButton preferenceButton;
 
-    public UserIconPanel(String username) {
+    public UserIconPanel(JButton preferenceButton) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBackground(new Color(169, 169, 169));
 
+        this.preferenceButton = preferenceButton;
         // add user icon
         photoLabel = new JLabel();
         final ImageIcon userPhoto = new ImageIcon(getClass().getResource("/image/icon.jpg"));
@@ -20,12 +25,13 @@ public class UserIconPanel extends JPanel {
         photoLabel.setIcon(roundedPhoto);
 
         // add username
-        userLabel = new JLabel("Username: " + username);
+        userLabel = new JLabel();
         userLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
         userLabel.setForeground(Color.WHITE);
 
         add(photoLabel);
         add(userLabel);
+        add(preferenceButton);
     }
 
     private ImageIcon createRoundedImage(ImageIcon imageIcon) {
@@ -47,6 +53,6 @@ public class UserIconPanel extends JPanel {
      * @param username the username
      */
     public void updateComponents(String username) {
-        userLabel.setText(username);
+        userLabel.setText(String.format("Username: %s", username));
     }
 }

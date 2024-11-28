@@ -1,11 +1,11 @@
 package interface_adapter.explore_ingredient;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.search_recipe.SearchRecipeState;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import use_case.explore_ingredient.ExploreIngredientOutputBoundary;
 import use_case.explore_ingredient.ExploreIngredientOutputData;
-import interface_adapter.ViewManagerModel;
 import use_case.search_recipes.SearchRecipeOutputBoundary;
 import use_case.search_recipes.SearchRecipeOutputData;
 
@@ -80,7 +80,7 @@ public class ExploreIngredientPresenter implements ExploreIngredientOutputBounda
     }
 
     @Override
-    public void switchToHomePageView(SearchRecipeOutputData outputData) {
+    public void switchToHomePageView() {
         this.viewManagerModel.setState(homePageViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
