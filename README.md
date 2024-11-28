@@ -22,44 +22,35 @@ Designed with accessibility in mind, the app provides seamless navigation and in
 
 1. **User Story 1: Account Management**  
    Users can sign up, log in, or log out of their own account. 
-   Upon signing up, they have the option to set their preferences for ingredients.  
-   *Completed on 11.21 by Miguel & George.*
+   Upon signing up, they have the option to set their preferences for ingredients.
 
 2. **User Story 2: Homepage Overview**  
-   Users see a homepage that contains all the use cases described below.  
-   *Completed on 11.21 by Miguel, Rolland & George.*
+   Users see a homepage that contains all the use cases described below.
 
 3. **User Story 3: User Profile Access**  
-   On the homepage, users can click on the profile button to view their username and their own recipes.  
-   *In progress.*
+   On the homepage, users can click on the profile button to view their username and their own recipes.
 
 4. **User Story 4: Recipe Recommendations**  
-   The homepage displays three recommended recipes, each with a name and image. 
-   Clicking on a recipe name redirects the user to an instruction page for that recipe.  
-   *Completed on 11.21 by Alex, Rolland & Miguel.*
+   The homepage displays three recommended recipes, each with a name and image, based on their chosen preference. 
+   Clicking on a recipe name redirects the user to an instruction page for that recipe.
 
 5. **User Story 5: Recipe Search Functionality**  
    Users can search for recipes by typing a keyword and clicking the search button. 
    The results display all recipes that match the search query. 
-   Users can click on a recipe name to view its instruction page. 
-   If users wish to go back, they can click the back button to return to the homepage.  
-   *Completed on 11.06 by Alex, Rolland & Miguel.*
+   Users can click on a recipe name to view its detailed instruction page.
+   In the detailed instruction page, it will show whether it is alcoholic or not for accessibility use.
 
 6. **User Story 6: Explore Ingredients**  
    Users can explore recipes by ingredients using the "Explore Ingredient" button on the homepage. 
    This displays a list of ingredients, and clicking on any ingredient shows all recipes containing that ingredient.
-   If users wish to go back, they can click the back button to return to the homepage. 
-   *Completed on 11.22 by Rolland, Alex & Miguel.*
 
 7. **User Story 7: Bookmark Recipes**  
-   Users can bookmark recipes on the instruction page. 
-   Bookmarked recipes are then displayed on the homepage.  
-   *In progress.*
+   Users can bookmark recipes on the detailed instruction page. 
+   Bookmarked recipes are then displayed on the homepage.
 
 8. **User Story 8: Create and Draft Recipes**  
-   Users can create and draft their own recipes by selecting ingredients and giving the recipe a unique name. 
-   Created recipes are displayed on the user profile.  
-   *In progress.*
+   Users can create and draft their own recipes by selecting ingredients, describing instructions and giving the recipe a unique name. 
+   Created recipes are displayed on the user profile.
 
 ---
 
