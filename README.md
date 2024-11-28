@@ -1,5 +1,6 @@
 # Recipe Lookup App
 ## CSC207 Final Project
+### Contributor: Miguel Galang, Rolland He, George Qin, Alex Zhang (alphabetical)
 
 ### Description 
 The Recipe Lookup App allows users to explore, manage, and create recipes through a personalized and user-friendly interface. 
