@@ -54,7 +54,7 @@ public class ExploreIngredientPresenter implements ExploreIngredientOutputBounda
     }
 
     @Override
-    public void prepareSuccessView(SearchRecipeOutputData outputData) {
+    public void prepareFailView(SearchRecipeOutputData outputData, String errorMessage) {
         final SearchRecipeState searchRecipeState = searchRecipeViewModel.getState();
         searchRecipeState.setQuery(searchRecipeState.getQuery());
         searchRecipeState.setRecipes(outputData.getRecipes());
@@ -67,7 +67,7 @@ public class ExploreIngredientPresenter implements ExploreIngredientOutputBounda
     }
 
     @Override
-    public void prepareFailView(SearchRecipeOutputData outputData, String errorMessage) {
+    public void prepareSuccessView(SearchRecipeOutputData outputData) {
         final SearchRecipeState searchRecipeState = searchRecipeViewModel.getState();
         searchRecipeState.setQuery(searchRecipeState.getQuery());
         searchRecipeState.setRecipes(outputData.getRecipes());

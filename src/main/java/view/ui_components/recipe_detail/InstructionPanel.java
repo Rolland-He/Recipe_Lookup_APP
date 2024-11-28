@@ -1,19 +1,25 @@
 package view.ui_components.recipe_detail;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
 import entities.recipe.Recipe;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import view.AbstractViewDecorator;
 import view.PageView;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Contains instruction about the recipe.
  */
 public class InstructionPanel extends AbstractViewDecorator<RecipeDetailState> {
+    private static final int INSTRUCTIONS_FONT_SIZE = 16;
+    private static final int HEADER_FONT_SIZE = 18;
     private final JTextArea instructionsArea;
 
     public InstructionPanel(PageView<RecipeDetailState> view) {
@@ -22,12 +28,12 @@ public class InstructionPanel extends AbstractViewDecorator<RecipeDetailState> {
         setBackground(Color.WHITE);
 
         instructionsArea = new JTextArea();
-        instructionsArea.setFont(new Font("Arial", Font.PLAIN, 16));
+        instructionsArea.setFont(new Font("Arial", Font.PLAIN, INSTRUCTIONS_FONT_SIZE));
         instructionsArea.setLineWrap(true);
         instructionsArea.setWrapStyleWord(true);
         instructionsArea.setEditable(false);
         final JLabel headerLabel = new JLabel("Instructions");
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        headerLabel.setFont(new Font("Arial", Font.BOLD, HEADER_FONT_SIZE));
 
         add(headerLabel, BorderLayout.NORTH);
         add(instructionsArea, BorderLayout.CENTER);

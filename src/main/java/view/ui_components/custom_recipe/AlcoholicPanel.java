@@ -1,7 +1,10 @@
 package view.ui_components.custom_recipe;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 /**
  * Panel that contains radio buttons to choose for the alcohol state.
@@ -10,7 +13,7 @@ public class AlcoholicPanel extends JPanel {
     private final ButtonGroup group;
 
     public AlcoholicPanel() {
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(2 + 1, 1));
         group = new ButtonGroup();
         final JRadioButton option1 = new JRadioButton("Alcoholic");
         final JRadioButton option2 = new JRadioButton("Non alcoholic");

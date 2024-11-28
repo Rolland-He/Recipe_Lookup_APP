@@ -1,8 +1,8 @@
 package use_case.create_recipe;
 
-import entities.recipe.Recipe;
-
 import java.util.List;
+
+import entities.recipe.Recipe;
 
 /**
  * Output data for the custom recipe usecase.

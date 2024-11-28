@@ -1,9 +1,9 @@
 package interface_adapter.home_page;
 
-import entities.recipe.Recipe;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import entities.recipe.Recipe;
 
 /**
  * State for the home page.

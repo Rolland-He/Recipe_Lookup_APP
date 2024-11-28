@@ -14,7 +14,9 @@ public class BookmarkRecipeInteractor implements BookmarkRecipeInputBoundary {
     private final SearchRecipeDataAccessInterface searchRecipeDataAccessObject;
     private final ViewRecipeOutputBoundary viewRecipePresenter;
 
-    public BookmarkRecipeInteractor(use_case.bookmark_recipe.BookmarkRecipeDataAccessInterface bookmarkRecipeDataAccessObject,
+    public BookmarkRecipeInteractor(use_case
+                                            .bookmark_recipe
+                                            .BookmarkRecipeDataAccessInterface bookmarkRecipeDataAccessObject,
                                     SearchRecipeDataAccessInterface searchRecipeDataAccessObject,
                                     ViewRecipeOutputBoundary viewRecipePresenter) {
         this.bookmarkRecipeDataAccessObject = bookmarkRecipeDataAccessObject;

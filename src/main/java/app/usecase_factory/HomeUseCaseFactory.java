@@ -37,6 +37,7 @@ public final class HomeUseCaseFactory {
      * @param recipeDetailViewModel the RecipeDetailViewModel to be injected into the View.
      * @param exploreIngredientViewModel the ExploreIngredientViewModel to be injected into the view.
      * @param userProfileViewModel the UserProfileViewModel to be injected into the View.
+     * @param customRecipeViewModel the CustomRecipeViewModel to be injected into the View.
      * @param cocktailDataAccessObject the CocktailDAO to be injected into the View
      * @param userDataAccessObject the UserDAO to be injected into the View.
      * @param serviceManager the ServiceManager to be injected into the View

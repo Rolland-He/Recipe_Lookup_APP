@@ -1,19 +1,28 @@
 package view.ui_components.main_page;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import entities.recipe.Recipe;
 import interface_adapter.home_page.HomePageController;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.services.ServiceManager;
 import interface_adapter.services.image_service.ImageServiceInterface;
-
-import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Recipe Panel that shows when searching for recipes.
@@ -26,12 +35,17 @@ public class HomeRecipeThumbnailPanel extends JPanel {
     private static final int LEFT = 10;
     private static final int RIGHT = 10;
     private static final int FONT_SIZE = 14;
+    private static final int PANEL_WIDTH = 200;
+    private static final int PANEL_HEIGHT = 250;
+    private static final int BORDER_THICKNESS = 1;
 
     // Colors for modern button styling
     private static final Color BUTTON_BACKGROUND = new Color(51, 122, 183);
     private static final Color BUTTON_HOVER = new Color(40, 96, 144);
     private static final Color BUTTON_BORDER = new Color(46, 109, 164);
     private static final Color TEXT_COLOR = Color.WHITE;
+    private static final Color BACKGROUND_COLOR = Color.WHITE;
+    private static final Color BORDER_COLOR = Color.LIGHT_GRAY;
 
     private JLabel imageLabel;
     private JButton nameButton;
@@ -48,15 +62,15 @@ public class HomeRecipeThumbnailPanel extends JPanel {
         this.homePageViewModel = homePageViewModel;
         // Sets Layout
         setLayout(new BorderLayout(H_GAP, V_GAP));
-        setBackground(Color.WHITE);
-        setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        setBackground(BACKGROUND_COLOR);
+        setBorder(BorderFactory.createLineBorder(BORDER_COLOR, BORDER_THICKNESS));
 
         // Initializes JComponents
         imageLabel = new JLabel();
         nameButton = createStyledButton();
 
         // Adjust the panel size
-        setPreferredSize(new Dimension(200, 250));
+        setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
     }
 
     private JButton createStyledButton() {
@@ -71,7 +85,7 @@ public class HomeRecipeThumbnailPanel extends JPanel {
 
         // Create rounded border with padding
         button.setBorder(new CompoundBorder(
-                new LineBorder(BUTTON_BORDER, 1, true),
+                new LineBorder(BUTTON_BORDER, BORDER_THICKNESS, true),
                 new EmptyBorder(TOP, LEFT, BOTTOM, RIGHT)
         ));
 

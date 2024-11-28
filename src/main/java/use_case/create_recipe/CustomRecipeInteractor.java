@@ -1,9 +1,9 @@
 package use_case.create_recipe;
 
+import java.util.List;
+
 import entities.recipe.Recipe;
 import use_case.user_profile.UserProfileOutputData;
-
-import java.util.List;
 
 /**
  * Interactor for the custom recipe usecase.

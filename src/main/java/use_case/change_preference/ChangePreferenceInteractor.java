@@ -1,8 +1,8 @@
 package use_case.change_preference;
 
-import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
-
 import java.util.List;
+
+import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
 
 /**
  * Interactor for the change preference usecase.

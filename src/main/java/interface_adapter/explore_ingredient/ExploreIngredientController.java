@@ -3,6 +3,9 @@ package interface_adapter.explore_ingredient;
 import use_case.explore_ingredient.ExploreIngredientInputBoundary;
 import use_case.explore_ingredient.ExploreIngredientInputData;
 
+/**
+ * Controller class for handling explore ingredient related operations.
+ */
 public class ExploreIngredientController {
     private final ExploreIngredientInputBoundary exploreIngredientUseCaseInteractor;
 

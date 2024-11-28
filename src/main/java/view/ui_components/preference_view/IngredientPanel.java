@@ -1,14 +1,21 @@
 package view.ui_components.preference_view;
 
+import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceState;
 import view.AbstractViewDecorator;
 import view.PageView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Ingredient panel that contains the list of ingredients.

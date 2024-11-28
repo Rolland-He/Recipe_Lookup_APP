@@ -1,24 +1,35 @@
 package view.views_placeholder;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import interface_adapter.custom_recipe.CustomRecipeController;
 import interface_adapter.custom_recipe.CustomRecipeState;
 import interface_adapter.custom_recipe.CustomRecipeViewModel;
 import interface_adapter.services.ServiceManager;
 import view.PageView;
-import view.ui_components.custom_recipe.*;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import view.ui_components.custom_recipe.ActionButtonPanel;
+import view.ui_components.custom_recipe.AlcoholicPanel;
+import view.ui_components.custom_recipe.IngredientsPanel;
+import view.ui_components.custom_recipe.InstructionsPanel;
+import view.ui_components.custom_recipe.RecipeNamePanel;
 
 /**
  * Custom recipe view.
  */
 public class CustomRecipeView extends JPanel implements PageView<CustomRecipeState>,
         ActionListener, PropertyChangeListener {
+    private static final int LAYOUT_GAP = 10;
+    private static final int BORDER_PADDING = 10;
+
     private final String viewName = "create recipe";
 
     private final JButton goHomeButton = new JButton("Go Home");
@@ -27,8 +38,8 @@ public class CustomRecipeView extends JPanel implements PageView<CustomRecipeSta
     public CustomRecipeView(CustomRecipeViewModel customRecipeViewModel,
                             CustomRecipeController customRecipeController,
                             ServiceManager serviceManager) {
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setLayout(new BorderLayout(LAYOUT_GAP, LAYOUT_GAP));
+        setBorder(BorderFactory.createEmptyBorder(BORDER_PADDING, BORDER_PADDING, BORDER_PADDING, BORDER_PADDING));
         customRecipeViewModel.addPropertyChangeListener(this);
 
         // Panels
@@ -50,7 +61,7 @@ public class CustomRecipeView extends JPanel implements PageView<CustomRecipeSta
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // Implementation details
     }
 
     @Override
@@ -65,7 +76,7 @@ public class CustomRecipeView extends JPanel implements PageView<CustomRecipeSta
     }
 
     private void setFields(CustomRecipeState state) {
-
+        // Implementation details
     }
 
     public String getViewName() {
@@ -74,6 +85,6 @@ public class CustomRecipeView extends JPanel implements PageView<CustomRecipeSta
 
     @Override
     public void update(CustomRecipeState state) {
-
+        // Implementation details
     }
 }

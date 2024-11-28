@@ -1,22 +1,25 @@
 package view.ui_components.custom_recipe;
 
-import interface_adapter.custom_recipe.CustomRecipeController;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import interface_adapter.custom_recipe.CustomRecipeController;
 
 /**
  * Panel that contains buttons.
  */
 public class ActionButtonPanel extends JPanel {
+    public static final int FIVE = 5;
     private final CustomRecipeController customRecipeController;
 
     public ActionButtonPanel(RecipeNamePanel namePanel, IngredientsPanel ingredientsPanel,
                              InstructionsPanel instructionsPanel, AlcoholicPanel radioButtonPanel,
                              CustomRecipeController customRecipeController) {
-        setLayout(new GridLayout(2, 1, 5, 5));
+        setLayout(new GridLayout(2, 1, FIVE, FIVE));
         this.customRecipeController = customRecipeController;
 
         final JButton goHomeButton = new JButton("Go Home");

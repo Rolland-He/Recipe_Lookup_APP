@@ -1,8 +1,6 @@
 package interface_adapter.explore_ingredient;
 
 import java.util.List;
-import entities.recipe.SimpleRecipe;
-import entities.recipe.Ingredient;
 
 /**
  * Explor Ingredient State.

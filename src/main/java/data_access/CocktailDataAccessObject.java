@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.recipe.Ingredient;
-import entities.recipe.factory.RecipeFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import entities.recipe.Ingredient;
 import entities.recipe.Recipe;
-import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
-import use_case.login.RandomRecipeDataAccessInterface;
-import use_case.view_recipe.ViewRecipeDataAccessInterface;
-import use_case.search_recipes.SearchRecipeDataAccessInterface;
+import entities.recipe.factory.RecipeFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
+import use_case.login.RandomRecipeDataAccessInterface;
+import use_case.search_recipes.SearchRecipeDataAccessInterface;
+import use_case.view_recipe.ViewRecipeDataAccessInterface;
 
 /**
  * The Data Access Object for recipe api.

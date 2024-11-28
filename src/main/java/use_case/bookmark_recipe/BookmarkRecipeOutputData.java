@@ -1,8 +1,8 @@
 package use_case.bookmark_recipe;
 
-import entities.recipe.Recipe;
-
 import java.util.List;
+
+import entities.recipe.Recipe;
 
 /**
  * Output data after bookmark or un-bookmarking a recipe.

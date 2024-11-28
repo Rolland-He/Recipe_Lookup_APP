@@ -1,10 +1,10 @@
 package view.ui_components.preference_view;
 
+import javax.swing.JButton;
+
 import interface_adapter.preference.PreferenceState;
 import view.AbstractViewDecorator;
 import view.PageView;
-
-import javax.swing.*;
 
 /**
  * ButtonPanel creates a panel with "Save" and "Back to Home" buttons.

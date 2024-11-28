@@ -1,5 +1,14 @@
 package view.views_placeholder;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import interface_adapter.home_page.HomePageController;
 import interface_adapter.home_page.HomePageState;
 import interface_adapter.home_page.HomePageViewModel;
@@ -10,13 +19,6 @@ import view.ui_components.main_page.BookmarkedDecoratorPanel;
 import view.ui_components.main_page.ContentPanel;
 import view.ui_components.main_page.HeaderPanel;
 import view.ui_components.main_page.RecommendedPanel;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * View for the home page.
