@@ -115,7 +115,8 @@ public class RecipeDetailView extends JPanel implements ActionListener, Property
         final RecipeDetailState state = (RecipeDetailState) event.getNewValue();
         if ("state".equals(event.getPropertyName())) {
             pageHandler.update(state);
-        } else if ("bookmark".equals(event.getPropertyName())) {
+        }
+        else if ("bookmark".equals(event.getPropertyName())) {
             String message = "bookmarked";
             if (!state.getIsBookmarked()) {
                 message = "un-" + message;

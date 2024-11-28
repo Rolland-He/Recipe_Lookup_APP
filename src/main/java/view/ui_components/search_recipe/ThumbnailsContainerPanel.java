@@ -1,10 +1,15 @@
 package view.ui_components.search_recipe;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import entities.recipe.Recipe;
 import interface_adapter.search_recipe.SearchRecipeController;

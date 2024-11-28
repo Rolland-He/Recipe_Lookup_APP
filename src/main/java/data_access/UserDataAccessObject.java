@@ -65,6 +65,7 @@ public class UserDataAccessObject implements
     private static final int MAX_BOUND = 20000;
     private static final int THREE = 3;
     private static final int SIX = 6;
+    private static final String KEY_ID = "_id";
 
     private final UserFactory userFactory;
     private final RecipeFactory recipeFactory;
@@ -260,7 +261,7 @@ public class UserDataAccessObject implements
         final MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION_NAME);
         final Document filter = new Document(USERNAME, username);
         final Document update = new Document(
-                "$push", new Document(CREATED_RECIPES, customMongoRecipe.getObjectId("_id")));
+                "$push", new Document(CREATED_RECIPES, customMongoRecipe.getObjectId(KEY_ID)));
         usersCollection.updateOne(filter, update);
 
     }
@@ -282,7 +283,7 @@ public class UserDataAccessObject implements
         final Document userFilter = new Document(
                 USERNAME, username);
         final Document userUpdate = new Document("$pull", new Document(
-                CREATED_RECIPES, customRecipe.getObjectId("_id")));
+                CREATED_RECIPES, customRecipe.getObjectId(KEY_ID)));
         usersCollection.updateOne(userFilter, userUpdate);
         // Removes the recipe from the recipe collection
         recipesCollection.deleteOne(Filters.eq(RECIPE_ID, id));
@@ -304,7 +305,7 @@ public class UserDataAccessObject implements
         final List<Recipe> results = new ArrayList<>();
 
         for (ObjectId recipeObjectId : createdRecipeIds) {
-            final Document recipeObject = recipesCollection.find(Filters.eq("_id", recipeObjectId)).first();
+            final Document recipeObject = recipesCollection.find(Filters.eq(KEY_ID, recipeObjectId)).first();
             final int recipeId = recipeObject.getInteger(RECIPE_ID);
             results.add(getRecipeById(recipeId));
         }

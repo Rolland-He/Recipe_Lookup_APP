@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -8,7 +9,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceState;
@@ -23,6 +25,8 @@ import view.ui_components.preference_view.TitlePanel;
  * Preference view that lets the user change their preference.
  */
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
+    private static final int BACKGROUND_COLOR_VALUE = 40;
+    
     private final String viewName = "preference";
     private final PreferenceController preferenceController;
     private final PreferenceViewModel preferenceViewModel;
@@ -44,7 +48,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         preferenceViewModel.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
-        setBackground(new Color(40, 40, 40));
+        setBackground(new Color(BACKGROUND_COLOR_VALUE, BACKGROUND_COLOR_VALUE, BACKGROUND_COLOR_VALUE));
 
         goHomeButton = new JButton("Go Home");
         updatePreferenceButton = new JButton("Update Preference");

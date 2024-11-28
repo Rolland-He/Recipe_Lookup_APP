@@ -1,10 +1,20 @@
 package app;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import app.usecase_factory.*;
+import app.usecase_factory.ChangePreferenceUseCaseFactory;
+import app.usecase_factory.CustomRecipeUseCaseFactory;
+import app.usecase_factory.ExploreIngredientUseCaseFactory;
+import app.usecase_factory.HomeUseCaseFactory;
+import app.usecase_factory.LoginUseCaseFactory;
+import app.usecase_factory.RecipeDetailUseCaseFactory;
+import app.usecase_factory.SearchRecipeUseCaseFactory;
+import app.usecase_factory.SignupUseCaseFactory;
+import app.usecase_factory.UserProfileUseCaseFactory;
 import data_access.CocktailDataAccessObject;
 import data_access.UserDataAccessObject;
 import entities.recipe.factory.RecipeFactory;
@@ -26,8 +36,16 @@ import interface_adapter.services.video_service.VideoServiceInterface;
 import interface_adapter.services.video_service.WebVideoService;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.user_profile.UserProfileViewModel;
-import view.*;
-import view.views_placeholder.*;
+import view.ExploreIngredientRecipeView;
+import view.PreferenceView;
+import view.RecipeDetailView;
+import view.SearchRecipeView;
+import view.ViewManager;
+import view.views_placeholder.CustomRecipeView;
+import view.views_placeholder.HomeView;
+import view.views_placeholder.LoginView;
+import view.views_placeholder.SignupView;
+import view.views_placeholder.UserProfileView;
 
 /**
  * Main Application Interface.
