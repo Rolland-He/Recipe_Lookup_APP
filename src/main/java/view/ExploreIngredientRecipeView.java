@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.explore_ingredient.ExploreIngredientController;
 import interface_adapter.explore_ingredient.ExploreIngredientState;
 import interface_adapter.explore_ingredient.ExploreIngredientViewModel;
@@ -26,8 +25,7 @@ import interface_adapter.services.ServiceManager;
 /**
  * Explore ingredient recipe view.
  */
-public class ExploreIngredientRecipeView extends JPanel implements PageView<ExploreIngredientState>,
-        ActionListener, PropertyChangeListener {
+public class ExploreIngredientRecipeView extends JPanel implements ActionListener, PropertyChangeListener {
     private static final Color BACKGROUND_COLOR = new Color(248, 249, 250);
     private static final int GRID_COLUMNS = 3;
     private static final int HEADER_PADDING = 10;
@@ -47,7 +45,6 @@ public class ExploreIngredientRecipeView extends JPanel implements PageView<Expl
     private final ExploreIngredientViewModel exploreViewModel;
     private final ExploreIngredientController exploreController;
     private final ServiceManager serviceManager;
-    private final ViewManagerModel viewManagerModel;
 
     // UI Components
     private final JButton backButton;
@@ -57,13 +54,11 @@ public class ExploreIngredientRecipeView extends JPanel implements PageView<Expl
     public ExploreIngredientRecipeView(
             ExploreIngredientViewModel exploreViewModel,
             ExploreIngredientController exploreController,
-            ServiceManager serviceManager,
-            ViewManagerModel viewManagerModel) {
+            ServiceManager serviceManager) {
 
         this.exploreViewModel = exploreViewModel;
         this.exploreController = exploreController;
         this.serviceManager = serviceManager;
-        this.viewManagerModel = viewManagerModel;
         this.exploreViewModel.addPropertyChangeListener(this);
 
         // Initialize components
@@ -104,9 +99,7 @@ public class ExploreIngredientRecipeView extends JPanel implements PageView<Expl
     }
 
     private void setupActionListeners() {
-        backButton.addActionListener(event -> {
-            exploreController.switchToHome();
-        });
+        backButton.addActionListener(event -> exploreController.switchToHome());
     }
 
     private JButton createIngredientButton(String ingredient) {
@@ -149,10 +142,5 @@ public class ExploreIngredientRecipeView extends JPanel implements PageView<Expl
 
     public String getViewName() {
         return viewName;
-    }
-
-    @Override
-    public void update(ExploreIngredientState state) {
-
     }
 }

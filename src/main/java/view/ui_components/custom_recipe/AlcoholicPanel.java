@@ -28,7 +28,15 @@ public class AlcoholicPanel extends JPanel {
         add(option3);
     }
 
+    /**
+     * Gets the selected alcoholic option. Otherwise, unspecified.
+     * @return the alcoholic state.
+     */
     public String getSelectedOption() {
-        return group.getSelection() != null ? group.getSelection().getActionCommand() : null;
+        String result = "Unspecified";
+        if (group.getSelection() != null) {
+            result = group.getSelection().getActionCommand();
+        }
+        return result;
     }
 }

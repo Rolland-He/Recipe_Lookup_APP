@@ -222,13 +222,13 @@ public class LoginView extends JPanel implements PageView<LoginState>, ActionLis
             public void changedUpdate(DocumentEvent e) {
                 updateUsername();
             }
-
-            private void updateUsername() {
-                final LoginState currentState = loginViewModel.getState();
-                currentState.setUsername(usernameTextField.getText());
-                loginViewModel.setState(currentState);
-            }
         });
+    }
+
+    private void updateUsername() {
+        final LoginState currentState = loginViewModel.getState();
+        currentState.setUsername(usernameTextField.getText());
+        loginViewModel.setState(currentState);
     }
 
     private void addPasswordListener() {
@@ -247,12 +247,12 @@ public class LoginView extends JPanel implements PageView<LoginState>, ActionLis
             public void changedUpdate(DocumentEvent e) {
                 updatePassword();
             }
-
-            private void updatePassword() {
-                final LoginState currentState = loginViewModel.getState();
-                currentState.setPassword(new String(passwordTextField.getPassword()));
-                loginViewModel.setState(currentState);
-            }
         });
+    }
+
+    private void updatePassword() {
+        final LoginState currentState = loginViewModel.getState();
+        currentState.setPassword(new String(passwordTextField.getPassword()));
+        loginViewModel.setState(currentState);
     }
 }

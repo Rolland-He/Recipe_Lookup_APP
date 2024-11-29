@@ -18,8 +18,8 @@ public interface ExploreIngredientDataAccessInterface {
 
     /**
      * Gets the list of available ingredients.
-     * @return list of ingredients (conventionally, a string)
      * As this ingredient filter does not account for the measurement for all drinks with ingredient.
+     * @return list of ingredients (conventionally, a string)
      */
     List<String> getIngredientsList();
 }

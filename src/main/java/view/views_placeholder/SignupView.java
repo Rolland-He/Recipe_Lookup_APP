@@ -201,76 +201,76 @@ public class SignupView extends JPanel implements PageView<SignupState>, ActionL
 
     private void addUsernameListener() {
         usernameField.getDocument().addDocumentListener(new DocumentListener() {
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setUsername(usernameField.getText());
-                signupViewModel.setState(currentState);
-            }
-
             @Override
             public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                usernameDocumentListener();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                usernameDocumentListener();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                usernameDocumentListener();
             }
         });
+    }
+
+    private void usernameDocumentListener() {
+        final SignupState currentState = signupViewModel.getState();
+        currentState.setUsername(usernameField.getText());
+        signupViewModel.setState(currentState);
     }
 
     private void addPasswordListener() {
         passwordField.getDocument().addDocumentListener(new DocumentListener() {
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setPassword(new String(passwordField.getPassword()));
-                signupViewModel.setState(currentState);
-            }
-
             @Override
             public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                passwordDocumentListener();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                passwordDocumentListener();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                passwordDocumentListener();
             }
         });
     }
 
+    private void passwordDocumentListener() {
+        final SignupState currentState = signupViewModel.getState();
+        currentState.setPassword(new String(passwordField.getPassword()));
+        signupViewModel.setState(currentState);
+    }
+
     private void addConfirmPasswordListener() {
         confirmPasswordField.getDocument().addDocumentListener(new DocumentListener() {
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setRepeatPassword(new String(confirmPasswordField.getPassword()));
-                signupViewModel.setState(currentState);
-            }
-
             @Override
             public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                confirmDocumentListener();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                confirmDocumentListener();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                confirmDocumentListener();
             }
         });
+    }
+
+    private void confirmDocumentListener() {
+        final SignupState currentState = signupViewModel.getState();
+        currentState.setRepeatPassword(new String(confirmPasswordField.getPassword()));
+        signupViewModel.setState(currentState);
     }
 }

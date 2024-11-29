@@ -1,6 +1,8 @@
 package view.ui_components.custom_recipe;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,16 +28,19 @@ public class ActionButtonPanel extends JPanel {
         goHomeButton.addActionListener(event -> customRecipeController.switchToHome());
 
         final JButton createRecipeButton = new JButton("Create Recipe");
-        createRecipeButton.addActionListener(e -> {
-            final List<String[]> ingredients = ingredientsPanel.getIngredients();
-            final List<String> ingredientNames = new ArrayList<>();
-            final List<String> ingredientMeasurements = new ArrayList<>();
-            for (String[] ingredient : ingredients) {
-                ingredientNames.add(ingredient[0]);
-                ingredientMeasurements.add(ingredient[1]);
+        createRecipeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                final List<String[]> ingredients = ingredientsPanel.getIngredients();
+                final List<String> ingredientNames = new ArrayList<>();
+                final List<String> ingredientMeasurements = new ArrayList<>();
+                for (String[] ingredient : ingredients) {
+                    ingredientNames.add(ingredient[0]);
+                    ingredientMeasurements.add(ingredient[1]);
+                }
+                customRecipeController.createRecipe(namePanel.getRecipeName(), instructionsPanel.getInstructions(),
+                        ingredientNames, ingredientMeasurements, radioButtonPanel.getSelectedOption());
             }
-            customRecipeController.createRecipe(namePanel.getRecipeName(), instructionsPanel.getInstructions(),
-                    ingredientNames, ingredientMeasurements, radioButtonPanel.getSelectedOption());
         });
 
         add(goHomeButton);

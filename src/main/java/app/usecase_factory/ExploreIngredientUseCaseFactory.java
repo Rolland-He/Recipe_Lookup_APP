@@ -42,7 +42,7 @@ public final class ExploreIngredientUseCaseFactory {
                 homePageViewModel, searchRecipeViewModel, exploreIngredientViewModel,
                 exploreIngredientDataAccessObject);
         return new ExploreIngredientRecipeView(
-                exploreIngredientViewModel, exploreIngredientController, serviceManager, viewManagerModel);
+                exploreIngredientViewModel, exploreIngredientController, serviceManager);
     }
 
     private static ExploreIngredientController createExploreIngredientUseCase(

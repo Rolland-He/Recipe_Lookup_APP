@@ -91,12 +91,6 @@ public class SearchRecipeView extends JPanel implements PageView<SearchRecipeSta
 
     private void addSearchTextFieldListener() {
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
-            private void documentListenerHelper() {
-                final SearchRecipeState currentState = searchRecipeViewModel.getState();
-                currentState.setQuery(searchTextField.getText());
-                searchRecipeViewModel.setState(currentState);
-            }
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 documentListenerHelper();
@@ -132,13 +126,19 @@ public class SearchRecipeView extends JPanel implements PageView<SearchRecipeSta
         }
     }
 
-    public String getViewName() {
-        return viewName;
-    }
-
     @Override
     public void update(SearchRecipeState state) {
 
+    }
+
+    private void documentListenerHelper() {
+        final SearchRecipeState currentState = searchRecipeViewModel.getState();
+        currentState.setQuery(searchTextField.getText());
+        searchRecipeViewModel.setState(currentState);
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 
     private void setFields(SearchRecipeState state) {
