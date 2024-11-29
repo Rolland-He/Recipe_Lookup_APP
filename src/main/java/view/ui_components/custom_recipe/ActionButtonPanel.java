@@ -10,17 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import interface_adapter.custom_recipe.CustomRecipeController;
+import interface_adapter.custom_recipe.CustomRecipeState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * Panel that contains buttons.
  */
-public class ActionButtonPanel extends JPanel {
+public class ActionButtonPanel extends AbstractViewDecorator<CustomRecipeState> {
     public static final int FIVE = 5;
     private final CustomRecipeController customRecipeController;
 
     public ActionButtonPanel(RecipeNamePanel namePanel, IngredientsPanel ingredientsPanel,
                              InstructionsPanel instructionsPanel, AlcoholicPanel radioButtonPanel,
-                             CustomRecipeController customRecipeController) {
+                             CustomRecipeController customRecipeController, PageView<CustomRecipeState> view) {
+        super(view);
         setLayout(new GridLayout(2, 1, FIVE, FIVE));
         this.customRecipeController = customRecipeController;
 
@@ -45,5 +49,10 @@ public class ActionButtonPanel extends JPanel {
 
         add(goHomeButton);
         add(createRecipeButton);
+    }
+
+    @Override
+    public void update(CustomRecipeState customRecipeState) {
+        super.getTempPage().update(customRecipeState);
     }
 }

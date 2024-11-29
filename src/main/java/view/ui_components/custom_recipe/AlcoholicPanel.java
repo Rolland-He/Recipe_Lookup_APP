@@ -1,5 +1,9 @@
 package view.ui_components.custom_recipe;
 
+import interface_adapter.custom_recipe.CustomRecipeState;
+import view.AbstractViewDecorator;
+import view.PageView;
+
 import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
@@ -9,10 +13,11 @@ import javax.swing.JRadioButton;
 /**
  * Panel that contains radio buttons to choose for the alcohol state.
  */
-public class AlcoholicPanel extends JPanel {
+public class AlcoholicPanel extends AbstractViewDecorator<CustomRecipeState> {
     private final ButtonGroup group;
 
-    public AlcoholicPanel() {
+    public AlcoholicPanel(PageView<CustomRecipeState> view) {
+        super(view);
         setLayout(new GridLayout(2 + 1, 1));
         group = new ButtonGroup();
         final JRadioButton option1 = new JRadioButton("Alcoholic");
@@ -26,6 +31,12 @@ public class AlcoholicPanel extends JPanel {
         add(option1);
         add(option2);
         add(option3);
+    }
+
+    @Override
+    public void update(CustomRecipeState state) {
+        super.getTempPage().update(state);
+        group.clearSelection();
     }
 
     /**

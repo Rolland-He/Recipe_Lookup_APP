@@ -31,10 +31,6 @@ public class CustomRecipePresenter implements CustomRecipeOutputBoundary {
     @Override
     public void switchToRecipeCreationView() {
         final CustomRecipeState state = customRecipeViewModel.getState();
-        state.setRecipeName("");
-        state.setRecipeInstruction("");
-        state.setIngredients(new ArrayList<>());
-        state.setIngredients(new ArrayList<>());
 
         customRecipeViewModel.setState(state);
         customRecipeViewModel.firePropertyChanged();
@@ -52,6 +48,7 @@ public class CustomRecipePresenter implements CustomRecipeOutputBoundary {
     @Override
     public void updateCustomRecipeView(UserProfileOutputData outputData) {
         customRecipeViewModel.firePropertyChanged("successful creation");
+        customRecipeViewModel.firePropertyChanged();
 
         final UserProfileState userProfileState = userProfileViewModel.getState();
         userProfileState.setCreatedRecipes(outputData.getCreatedRecipes());

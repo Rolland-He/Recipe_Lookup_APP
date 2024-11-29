@@ -1,5 +1,9 @@
 package view.ui_components.custom_recipe;
 
+import interface_adapter.custom_recipe.CustomRecipeState;
+import view.AbstractViewDecorator;
+import view.PageView;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -14,7 +18,7 @@ import javax.swing.JTextField;
 /**
  * Panel for managing ingredients in a custom recipe.
  */
-public class IngredientsPanel extends JPanel {
+public class IngredientsPanel extends AbstractViewDecorator<CustomRecipeState> {
     private static final int SCROLL_PANE_WIDTH = 400;
     private static final int SCROLL_PANE_HEIGHT = 150;
     private static final int GRID_ROWS = 1;
@@ -24,7 +28,8 @@ public class IngredientsPanel extends JPanel {
 
     private final JPanel ingredientListPanel;
 
-    public IngredientsPanel() {
+    public IngredientsPanel(PageView<CustomRecipeState> view) {
+        super(view);
         setLayout(new BorderLayout());
         ingredientListPanel = new JPanel();
         ingredientListPanel.setLayout(new BoxLayout(ingredientListPanel, BoxLayout.Y_AXIS));
@@ -36,6 +41,14 @@ public class IngredientsPanel extends JPanel {
         final JButton addIngredientButton = new JButton("Add Ingredient");
         addIngredientButton.addActionListener(event -> addIngredientRow());
         add(addIngredientButton, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void update(CustomRecipeState state) {
+        super.getTempPage().update(state);
+        ingredientListPanel.removeAll();
+        ingredientListPanel.revalidate();
+        ingredientListPanel.repaint();
     }
 
     private void addIngredientRow() {
