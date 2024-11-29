@@ -48,8 +48,7 @@ public class CocktailDataAccessObject implements
             final JSONObject raw = cocktails.getJSONObject(i);
             recipes.add(createRecipe(raw));
         }
-        filterRecipes(recipes, ingredientsToAvoid);
-        return recipes;
+        return filterRecipes(recipes, ingredientsToAvoid);
     }
 
     @Override
@@ -122,16 +121,22 @@ public class CocktailDataAccessObject implements
         return ingredientsList;
     }
 
-    private void filterRecipes(List<Recipe> recipes, List<String> ingredientsToAvoid) {
-        for (int i = 0; i < recipes.size(); i++) {
-            final Recipe recipe = recipes.get(i);
+    private List<Recipe> filterRecipes(List<Recipe> recipes, List<String> ingredientsToAvoid) {
+        final List<Recipe> result = new ArrayList<>();
+        for (Recipe recipe: recipes) {
             final List<Ingredient> ingredients = recipe.getIngredients();
-            final boolean isContained = ingredients.stream()
-                    .anyMatch(ingredient -> ingredientsToAvoid.contains(ingredient.getName()));
-            if (isContained) {
-                recipes.remove(i);
+            boolean isContained = false;
+            for (Ingredient ingredient: ingredients) {
+                if (ingredientsToAvoid.contains(ingredient.getName())) {
+                    isContained = true;
+                    break;
+                }
+            }
+            if (!isContained) {
+                result.add(recipe);
             }
         }
+        return result;
     }
 
     // getCocktails and getIngredientByIdentifier might return null.

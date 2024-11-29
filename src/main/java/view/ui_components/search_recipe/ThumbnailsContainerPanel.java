@@ -13,13 +13,16 @@ import javax.swing.JScrollPane;
 
 import entities.recipe.Recipe;
 import interface_adapter.search_recipe.SearchRecipeController;
+import interface_adapter.search_recipe.SearchRecipeState;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import interface_adapter.services.ServiceManager;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * Recipe Scroll Panel that shows the recipe in a scrollable grid panel.
  */
-public class ThumbnailsContainerPanel extends JPanel {
+public class ThumbnailsContainerPanel extends AbstractViewDecorator<SearchRecipeState> {
     private static final int ROW = 0;
     private static final int COL = 3;
     private static final int H_GAP = 10;
@@ -34,7 +37,8 @@ public class ThumbnailsContainerPanel extends JPanel {
 
     public ThumbnailsContainerPanel(SearchRecipeViewModel searchRecipeViewModel,
                                     SearchRecipeController searchRecipeController,
-                                    ServiceManager serviceManager) {
+                                    ServiceManager serviceManager, PageView<SearchRecipeState> pageView) {
+        super(pageView);
         this.serviceManager = serviceManager;
         this.searchRecipeController = searchRecipeController;
         this.searchRecipeViewModel = searchRecipeViewModel;
@@ -66,11 +70,13 @@ public class ThumbnailsContainerPanel extends JPanel {
         clearRecipes();
     }
 
-    /**
-     * Updates the recipe scroll panel with the new recipes.
-     * @param recipes a list of Recipe.
-     */
-    public void displayRecipes(List<Recipe> recipes) {
+    @Override
+    public void update(SearchRecipeState state) {
+        super.getTempPage().update(state);
+        displayRecipes(state.getRecipes());
+    }
+
+    private void displayRecipes(List<Recipe> recipes) {
         recipePanel.removeAll();
         // Reset to grid layout
         recipePanel.setLayout(new GridLayout(ROW, COL, H_GAP, V_GAP));

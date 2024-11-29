@@ -17,14 +17,14 @@ import interface_adapter.search_recipe.SearchRecipeController;
 import interface_adapter.search_recipe.SearchRecipeState;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import interface_adapter.services.ServiceManager;
+import view.concrete_page.SearchRecipeConcrete;
 import view.ui_components.search_recipe.SearchHeaderPanel;
 import view.ui_components.search_recipe.ThumbnailsContainerPanel;
 
 /**
  * The view when the user searches for a recipe through some text field.
  */
-public class SearchRecipeView extends JPanel implements PageView<SearchRecipeState>,
-        ActionListener, PropertyChangeListener {
+public class SearchRecipeView extends JPanel implements ActionListener, PropertyChangeListener {
     private static final int SEARCH_TEXT_FIELD_COLUMNS = 15;
 
     private final String viewName = "search recipe";
@@ -35,6 +35,7 @@ public class SearchRecipeView extends JPanel implements PageView<SearchRecipeSta
     private final JButton backButton;
 
     private final ThumbnailsContainerPanel thumbnailContainerPanel;
+    private final PageView<SearchRecipeState> viewHandler;
 
     private final SearchRecipeViewModel searchRecipeViewModel;
     private final ServiceManager serviceManager;
@@ -52,15 +53,14 @@ public class SearchRecipeView extends JPanel implements PageView<SearchRecipeSta
         searchButton = new JButton("Search");
         backButton = new JButton("<");
 
-        // Create RecipeScrollPanel firsts
+        final SearchRecipeConcrete searchRecipeConcrete = new SearchRecipeConcrete();
         thumbnailContainerPanel = new ThumbnailsContainerPanel(
                 searchRecipeViewModel, searchRecipeController,
-                serviceManager);
-
-        // Create SearchPanel with all four parameters
+                serviceManager, searchRecipeConcrete);
         final SearchHeaderPanel searchBar = new SearchHeaderPanel(
-                backButton, searchTextField, searchButton
+                backButton, searchTextField, searchButton, thumbnailContainerPanel
         );
+        viewHandler = searchBar;
 
         final ActionListener switchToHomeViewListener = event -> {
             if (event.getSource().equals(backButton)) {
@@ -117,18 +117,13 @@ public class SearchRecipeView extends JPanel implements PageView<SearchRecipeSta
         // We pop up a JOptionPane to the user.
         if (evt.getPropertyName().equals("state")) {
             final SearchRecipeState state = (SearchRecipeState) evt.getNewValue();
-            setFields(state);
+            viewHandler.update(state);
         }
         else if (evt.getPropertyName().equals("usecaseFailed")) {
             JOptionPane.showMessageDialog(this,
                     String.format("No recipes found with recipe for: %s",
                             searchRecipeViewModel.getState().getQuery()));
         }
-    }
-
-    @Override
-    public void update(SearchRecipeState state) {
-
     }
 
     private void documentListenerHelper() {
@@ -139,9 +134,5 @@ public class SearchRecipeView extends JPanel implements PageView<SearchRecipeSta
 
     public String getViewName() {
         return viewName;
-    }
-
-    private void setFields(SearchRecipeState state) {
-        thumbnailContainerPanel.displayRecipes(state.getRecipes());
     }
 }
