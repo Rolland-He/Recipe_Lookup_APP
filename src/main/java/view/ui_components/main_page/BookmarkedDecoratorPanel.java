@@ -2,7 +2,6 @@ package view.ui_components.main_page;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 import entities.recipe.Recipe;
 import interface_adapter.home_page.HomePageController;
@@ -26,7 +26,6 @@ import view.PageView;
 public class BookmarkedDecoratorPanel extends AbstractViewDecorator<HomePageState> {
     private static final int LAYOUT_GAP = 10;
     private static final int BORDER_SIZE = 10;
-    private static final int FONT_SIZE = 20;
     private static final int GRID_COLUMNS = 3;
 
     private final JPanel gridPanel;
@@ -50,8 +49,7 @@ public class BookmarkedDecoratorPanel extends AbstractViewDecorator<HomePageStat
         setLayout(new BorderLayout(LAYOUT_GAP, LAYOUT_GAP));
         setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
 
-        final JLabel headerLabel = new JLabel("Bookmarked Recipes", JLabel.CENTER);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
+        final JLabel headerLabel = new JLabel("Bookmarked Recipes", SwingConstants.CENTER);
         add(headerLabel, BorderLayout.NORTH);
 
         gridPanel = new JPanel(new GridLayout(0, GRID_COLUMNS, LAYOUT_GAP, LAYOUT_GAP));
