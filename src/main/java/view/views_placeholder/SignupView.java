@@ -32,7 +32,6 @@ import view.PageView;
 public class SignupView extends JPanel implements PageView<SignupState>, ActionListener, PropertyChangeListener {
     private static final int FIELD_COLUMNS = 20;
     private static final int TITLE_FONT_SIZE = 24;
-    private static final int BUTTON_FONT_SIZE = 18;
     private static final int INSET_SIZE = 10;
     private static final int THREE = 3;
     private static final int FOUR = 10;

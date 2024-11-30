@@ -50,7 +50,7 @@ public class BookmarkedDecoratorPanel extends AbstractViewDecorator<HomePageStat
         setLayout(new BorderLayout(LAYOUT_GAP, LAYOUT_GAP));
         setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
 
-        final JLabel headerLabel = new JLabel("Recommended Recipes", JLabel.CENTER);
+        final JLabel headerLabel = new JLabel("Bookmarked Recipes", JLabel.CENTER);
         headerLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
         add(headerLabel, BorderLayout.NORTH);
 
