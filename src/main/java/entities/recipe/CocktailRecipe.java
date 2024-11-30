@@ -48,7 +48,7 @@ public class CocktailRecipe implements Recipe {
 
     @Override
     public String toString() {
-        return String.format("Name: %s\n", name);
+        return String.format("Name: %s", name);
     }
 
     @Override

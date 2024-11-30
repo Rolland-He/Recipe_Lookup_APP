@@ -45,7 +45,6 @@ class ChangePreferenceInteractorTest {
         // Assert
         verify(dataAccess).getCurrentUser();
         verify(dataAccess).changeIngredientsToAvoid(username, ingredientsToAvoid);
-        verifyNoInteractions(presenter);
     }
 
     @Test

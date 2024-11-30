@@ -1,9 +1,9 @@
 package use_case;
 
+import data_access.exceptions.RecipeNotFound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import entities.recipe.Recipe;
-import exceptions.RecipeNotFound;
 import use_case.bookmark_recipe.BookmarkRecipeDataAccessInterface;
 import use_case.view_recipe.*;
 

@@ -137,7 +137,7 @@ class SearchRecipeInputDataTest {
     void testConstructorAndGetters() {
         // Arrange
         String query = "pasta";
-        List<Integer> recipes = Arrays.asList(mock(Integer.class), mock(Integer.class));
+        List<Integer> recipes = new ArrayList<>();
 
         // Act
         SearchRecipeInputData inputData = new SearchRecipeInputData(query, recipes);

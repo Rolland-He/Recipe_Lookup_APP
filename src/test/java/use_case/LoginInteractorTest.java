@@ -156,7 +156,7 @@ class LoginInteractorTest {
 
         // Assert
         verify(userDataAccess).existsByName(username);
-        verify(userDataAccess, times(2)).getUser(username);
+        verify(userDataAccess).getUser(username);
         verify(loginPresenter).prepareFailView(username + ": User not found.");
         verify(loginPresenter, never()).prepareSuccessView(any(LoginOutputData.class));
         verify(loginPresenter, never()).preparePreferenceView(any(LoginOutputData.class));

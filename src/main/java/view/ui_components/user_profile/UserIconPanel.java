@@ -1,5 +1,9 @@
 package view.ui_components.user_profile;
 
+import interface_adapter.user_profile.UserProfileState;
+import view.AbstractViewDecorator;
+import view.PageView;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -17,7 +21,7 @@ import javax.swing.JPanel;
 /**
  * User Icon Panel that stores the username and photo of the user.
  */
-public class UserIconPanel extends JPanel {
+public class UserIconPanel extends AbstractViewDecorator<UserProfileState> {
     private static final int GRAY_COLOR = 169;
     private static final int FONT_SIZE = 18;
 
@@ -25,7 +29,8 @@ public class UserIconPanel extends JPanel {
     private final JLabel photoLabel;
     private final JButton preferenceButton;
 
-    public UserIconPanel(JButton preferenceButton) {
+    public UserIconPanel(JButton preferenceButton, PageView<UserProfileState> view) {
+        super(view);
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBackground(new Color(GRAY_COLOR, GRAY_COLOR, GRAY_COLOR));
 
@@ -47,6 +52,12 @@ public class UserIconPanel extends JPanel {
         add(preferenceButton);
     }
 
+    @Override
+    public void update(UserProfileState state) {
+        super.getTempPage().update(state);
+        userLabel.setText(String.format("Username: %s", state.getUsername()));
+    }
+
     private ImageIcon createRoundedImage(ImageIcon imageIcon) {
         final int diameter = Math.min(imageIcon.getIconWidth(), imageIcon.getIconHeight());
         final BufferedImage mask = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
@@ -59,14 +70,5 @@ public class UserIconPanel extends JPanel {
         g2d.dispose();
 
         return new ImageIcon(mask);
-    }
-
-    /**
-     * Updates the user icon panel components.
-     *
-     * @param username the username
-     */
-    public void updateComponents(String username) {
-        userLabel.setText(String.format("Username: %s", username));
     }
 }

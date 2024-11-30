@@ -11,14 +11,17 @@ import javax.swing.JScrollPane;
 import entities.recipe.Recipe;
 import interface_adapter.services.ServiceManager;
 import interface_adapter.user_profile.UserProfileController;
+import interface_adapter.user_profile.UserProfileState;
 import interface_adapter.user_profile.UserProfileViewModel;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * CustomRecipePanel represents a panel that displays custom recipes created by the user.
  * This class extends JPanel and is responsible for rendering and managing custom recipe information.
  * This class is not expected to be null.
  */
-public class CustomRecipePanel extends JPanel {
+public class CustomRecipePanel extends AbstractViewDecorator<UserProfileState> {
 
     private static final Color BACKGROUND_COLOR = new Color(211, 211, 211);
     private static final Color BORDER_COLOR = new Color(169, 169, 169);
@@ -35,7 +38,9 @@ public class CustomRecipePanel extends JPanel {
 
     public CustomRecipePanel(UserProfileViewModel userProfileViewModel,
                              UserProfileController userProfileController,
-                             ServiceManager serviceManager) {
+                             ServiceManager serviceManager,
+                             PageView<UserProfileState> view) {
+        super(view);
         this.userProfileViewModel = userProfileViewModel;
         this.userProfileController = userProfileController;
         this.serviceManager = serviceManager;
@@ -59,12 +64,11 @@ public class CustomRecipePanel extends JPanel {
         return scrollPane;
     }
 
-    /**
-     * Updates the custom recipe panel which consists of a list of recipes the user has created.
-     * @param createdRecipes the list of recipes created by user.
-     */
-    public void updateComponents(List<Recipe> createdRecipes) {
+    @Override
+    public void update(UserProfileState state) {
+        super.getTempPage().update(state);
         removeAll();
+        final List<Recipe> createdRecipes = state.getCreatedRecipes();
 
         for (Recipe recipe : createdRecipes) {
             final UserProfileRecipeThumbnailPanel customRecipePanel = new UserProfileRecipeThumbnailPanel(
