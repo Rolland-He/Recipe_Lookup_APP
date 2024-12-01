@@ -35,5 +35,6 @@ public class SearchHeaderPanel extends AbstractViewDecorator<SearchRecipeState> 
     @Override
     public void update(SearchRecipeState state) {
         super.getTempPage().update(state);
+        searchField.setText(state.getQuery());
     }
 }

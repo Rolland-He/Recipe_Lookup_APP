@@ -33,6 +33,7 @@ public class SearchRecipePresenter implements SearchRecipeOutputBoundary, ViewRe
     public void prepareSuccessView(SearchRecipeOutputData outputData) {
         final SearchRecipeState searchRecipeState = searchRecipeViewModel.getState();
         searchRecipeState.setRecipes(outputData.getRecipes());
+        searchRecipeState.setQuery(outputData.getQuery());
 
         this.searchRecipeViewModel.setState(searchRecipeState);
         this.searchRecipeViewModel.firePropertyChanged();
