@@ -129,5 +129,29 @@ class CocktailFactoryTest {
         assertEquals(videoLink, recipe.getVideoLink());
         assertEquals(isAlcoholic, recipe.getIsAlcoholic());
     }
+
+    @Test
+    void testCreateInvalidType() {
+        // Arrange
+        RecipeFactory factory = new RecipeFactory();
+        String name = "Margarita";
+        int id = 123;
+        String instruction = "Mix tequila";
+        List<Ingredient> ingredients = Arrays.asList(
+                new Ingredient("Tequila", "60ml"),
+                new Ingredient("Lime", "1 piece")
+        );
+        String imageLink = "margarita.jpg";
+        String videoLink = "margarita.mp4";
+        String isAlcoholic = "Alcoholic";
+        String invalidType = "unknown";
+
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                factory.create(name, id, instruction, ingredients, imageLink, videoLink, isAlcoholic, invalidType)
+        );
+
+        assertEquals("Invalid type of recipe", exception.getMessage());
+    }
 }
 
