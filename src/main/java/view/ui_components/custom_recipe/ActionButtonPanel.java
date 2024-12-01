@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import interface_adapter.custom_recipe.CustomRecipeController;
 import interface_adapter.custom_recipe.CustomRecipeState;

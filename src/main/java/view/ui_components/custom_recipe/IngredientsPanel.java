@@ -1,19 +1,20 @@
 package view.ui_components.custom_recipe;
 
-import interface_adapter.custom_recipe.CustomRecipeState;
-import view.AbstractViewDecorator;
-import view.PageView;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import interface_adapter.custom_recipe.CustomRecipeState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * Panel for managing ingredients in a custom recipe.
@@ -72,7 +73,7 @@ public class IngredientsPanel extends AbstractViewDecorator<CustomRecipeState> {
     }
 
     /**
-     * Retrieves the list of ingredients entered in the panel.
+     * Retrieves the list of ingredients entered on the panel.
      * This method iterates through all the ingredient rows in the panel,
      * extracting the name and measurement of each ingredient from the
      * respective text fields.
@@ -81,8 +82,8 @@ public class IngredientsPanel extends AbstractViewDecorator<CustomRecipeState> {
      *         the ingredient name at index 0 and the measurement at index 1.
      *         Returns an empty list if no ingredients are present.
      */
-    public ArrayList<String[]> getIngredients() {
-        final ArrayList<String[]> ingredients = new ArrayList<>();
+    public List<String[]> getIngredients() {
+        final List<String[]> ingredients = new ArrayList<>();
         for (java.awt.Component component : ingredientListPanel.getComponents()) {
             final JPanel row = (JPanel) component;
             final JTextField nameField = (JTextField) row.getComponent(0);

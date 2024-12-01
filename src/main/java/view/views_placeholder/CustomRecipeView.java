@@ -70,6 +70,10 @@ public class CustomRecipeView extends JPanel implements ActionListener, Property
         if (evt.getPropertyName().equals("state")) {
             final CustomRecipeState state = customRecipeViewModel.getState();
             viewHandler.update(state);
+            if (state.getError() != null) {
+                JOptionPane.showMessageDialog(this, state.getError());
+                state.setError("");
+            }
         }
         else if (evt.getPropertyName().equals("successful creation")) {
             JOptionPane.showMessageDialog(this, "Successfully created recipe");

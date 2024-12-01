@@ -1,15 +1,14 @@
 package view.ui_components.user_profile;
 
-import interface_adapter.user_profile.UserProfileState;
-import view.AbstractViewDecorator;
-import view.PageView;
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
+
+import interface_adapter.user_profile.UserProfileState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * A panel containing the return button, styled with a specific layout and design.
@@ -27,7 +26,7 @@ public class ReturnButtonPanel extends AbstractViewDecorator<UserProfileState> {
 
     /**
      * Creates a panel containing the return button with customized styles.
-     *
+     * @param view the page view to be connected into the decorator.
      * @param returnButton the return button to add to the panel, must not be null.
      */
     public ReturnButtonPanel(JButton returnButton, PageView<UserProfileState> view) {

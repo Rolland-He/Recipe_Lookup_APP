@@ -1,7 +1,5 @@
 package interface_adapter.custom_recipe;
 
-import java.util.ArrayList;
-
 import interface_adapter.ViewManagerModel;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.user_profile.UserProfileState;
@@ -55,5 +53,14 @@ public class CustomRecipePresenter implements CustomRecipeOutputBoundary {
 
         userProfileViewModel.setState(userProfileState);
         userProfileViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareFailView(String errorMessage) {
+        final CustomRecipeState state = customRecipeViewModel.getState();
+        state.setError(errorMessage);
+
+        customRecipeViewModel.setState(state);
+        customRecipeViewModel.firePropertyChanged();
     }
 }

@@ -1,9 +1,5 @@
 package view.ui_components.user_profile;
 
-import interface_adapter.user_profile.UserProfileState;
-import view.AbstractViewDecorator;
-import view.PageView;
-
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -16,7 +12,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+import interface_adapter.user_profile.UserProfileState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * User Icon Panel that stores the username and photo of the user.

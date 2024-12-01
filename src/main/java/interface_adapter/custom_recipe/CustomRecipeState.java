@@ -11,12 +11,14 @@ public class CustomRecipeState {
     private String recipeInstruction = "";
     private List<String> ingredients = new ArrayList<>();
     private List<String> measurements = new ArrayList<>();
+    private String error = "";
 
     public CustomRecipeState(CustomRecipeState copy) {
         this.recipeName = copy.recipeName;
         this.recipeInstruction = copy.recipeInstruction;
         this.ingredients = copy.ingredients;
         this.measurements = copy.measurements;
+        this.error = copy.error;
     }
 
     public CustomRecipeState() {
@@ -52,5 +54,13 @@ public class CustomRecipeState {
 
     public void setMeasurements(List<String> measurements) {
         this.measurements = measurements;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getError() {
+        return error;
     }
 }

@@ -1,14 +1,13 @@
 package view.ui_components.custom_recipe;
 
-import interface_adapter.custom_recipe.CustomRecipeState;
-import view.AbstractViewDecorator;
-import view.PageView;
-
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import interface_adapter.custom_recipe.CustomRecipeState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * RecipeNamePanel.

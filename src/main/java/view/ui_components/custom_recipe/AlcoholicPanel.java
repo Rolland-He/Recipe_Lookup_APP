@@ -1,14 +1,13 @@
 package view.ui_components.custom_recipe;
 
-import interface_adapter.custom_recipe.CustomRecipeState;
-import view.AbstractViewDecorator;
-import view.PageView;
-
 import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
+import interface_adapter.custom_recipe.CustomRecipeState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * Panel that contains radio buttons to choose for the alcohol state.

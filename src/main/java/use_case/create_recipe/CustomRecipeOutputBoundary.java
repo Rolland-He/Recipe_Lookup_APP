@@ -21,4 +21,10 @@ public interface CustomRecipeOutputBoundary {
      * @param outputData the output data.
      */
     void updateCustomRecipeView(UserProfileOutputData outputData);
+
+    /**
+     * Prepares the fail view when there are error that occurred.
+     * @param errorMessage the message.
+     */
+    void prepareFailView(String errorMessage);
 }

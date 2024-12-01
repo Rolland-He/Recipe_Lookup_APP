@@ -2,6 +2,7 @@ package use_case.create_recipe;
 
 import java.util.List;
 
+import com.mongodb.MongoSocketException;
 import entities.recipe.Recipe;
 import use_case.user_profile.UserProfileOutputData;
 
@@ -31,14 +32,20 @@ public class CustomRecipeInteractor implements CustomRecipeInputBoundary {
 
     @Override
     public void saveCustomRecipe(CustomRecipeInputData inputData) {
-        customRecipeDataAccessObject.createCustomRecipe(
-                customRecipeDataAccessObject.getCurrentUser(),
-                inputData.getRecipeName(),
-                inputData.getRecipeInstruction(),
-                inputData.getIngredients(),
-                inputData.getMeasurements(),
-                inputData.getIsAlcoholic()
-        );
+        try {
+            customRecipeDataAccessObject.createCustomRecipe(
+                    customRecipeDataAccessObject.getCurrentUser(),
+                    inputData.getRecipeName(),
+                    inputData.getRecipeInstruction(),
+                    inputData.getIngredients(),
+                    inputData.getMeasurements(),
+                    inputData.getIsAlcoholic()
+            );
+        }
+        catch (MongoSocketException exception) {
+            customRecipePresenter.prepareFailView("Failed to save custom recipe.");
+        }
+
         final String username = customRecipeDataAccessObject.getCurrentUser();
         final List<Recipe> customRecipes = customRecipeDataAccessObject.getCustomRecipes(username);
         final UserProfileOutputData outputData = new UserProfileOutputData(username, customRecipes);
