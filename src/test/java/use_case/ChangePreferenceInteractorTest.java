@@ -2,6 +2,7 @@ package use_case;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
@@ -21,13 +22,18 @@ class ChangePreferenceInteractorTest {
     private ChangePreferenceDataAccessInterface dataAccess;
     private ChangePreferenceOutputBoundary presenter;
     private ChangePreferenceInteractor interactor;
-    private ExploreIngredientDataAccessInterface ingredientDataAccess;
+    private ExploreIngredientDataAccessInterface exploreIngredientDataAccessObject;
+    private ExploreIngredientDataAccessInterface exploreIngredientDataAccessMock;
+    private ChangePreferenceOutputBoundary changePreferencePresenterMock;
 
     @BeforeEach
     void setUp() {
         dataAccess = mock(ChangePreferenceDataAccessInterface.class);
         presenter = mock(ChangePreferenceOutputBoundary.class);
-        interactor = new ChangePreferenceInteractor(presenter, dataAccess, ingredientDataAccess);
+        exploreIngredientDataAccessObject = mock(ExploreIngredientDataAccessInterface.class);
+        exploreIngredientDataAccessMock = mock(ExploreIngredientDataAccessInterface.class);
+        changePreferencePresenterMock = mock(ChangePreferenceOutputBoundary.class);
+        interactor = new ChangePreferenceInteractor(presenter, dataAccess, exploreIngredientDataAccessObject);
     }
 
     @Test
@@ -45,6 +51,7 @@ class ChangePreferenceInteractorTest {
         // Assert
         verify(dataAccess).getCurrentUser();
         verify(dataAccess).changeIngredientsToAvoid(username, ingredientsToAvoid);
+        verifyNoInteractions(presenter);
     }
 
     @Test
@@ -72,6 +79,23 @@ class ChangePreferenceInteractorTest {
     }
 
     @Test
+    void testSwitchToPreferenceView() {
+        // Arrange
+        List<String> mockIngredients = Arrays.asList("Sugar", "Salt", "Pepper");
+        when(exploreIngredientDataAccessMock.getIngredientsList()).thenReturn(mockIngredients);
+
+        // Act
+        interactor.switchToPreferenceView();
+
+        // Assert
+        verify(exploreIngredientDataAccessMock).getIngredientsList();
+        verify(changePreferencePresenterMock).switchToPreferenceView(argThat(outputData ->
+                outputData.getIngredients().equals(mockIngredients) &&
+                        !outputData.isUseCaseFailed()
+        ));
+    }
+
+    @Test
     void testChangeIngredientsToAvoid_EmptyList() {
         // Arrange
         String username = "testUser";
@@ -94,10 +118,10 @@ class ChangePreferenceOutputDataTest {
     void testConstructorAndGetter_Failure() {
         // Arrange
         boolean useCaseFailed = true;
-        List<String> ingredientsList = Arrays.asList("Peanuts", "Dairy");
+        List<String> ingredients = Arrays.asList("Peanuts", "Dairy");
 
         // Act
-        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredientsList, useCaseFailed);
+        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredients,useCaseFailed);
 
         // Assert
         assertTrue(outputData.isUseCaseFailed(), "Expected useCaseFailed to be true");
@@ -107,12 +131,56 @@ class ChangePreferenceOutputDataTest {
     void testConstructorAndGetter_Success() {
         // Arrange
         boolean useCaseFailed = false;
-        List<String> ingredientsList = Arrays.asList("Peanuts", "Dairy");
+        List<String> ingredients = Arrays.asList("Peanuts", "Dairy");
 
         // Act
-        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredientsList, useCaseFailed);
+        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredients,useCaseFailed);
 
         // Assert
         assertFalse(outputData.isUseCaseFailed(), "Expected useCaseFailed to be false");
+    }
+
+    @Test
+    void testGetIngredientsWithValidIngredients() {
+        // Arrange
+        List<String> ingredients = Arrays.asList("Salt", "Pepper", "Sugar");
+        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredients, false);
+
+        // Act
+        List<String> result = outputData.getIngredients();
+
+        // Assert
+        assertEquals(ingredients, result);
+        assertEquals(3, result.size());
+        assertTrue(result.contains("Salt"));
+        assertTrue(result.contains("Pepper"));
+        assertTrue(result.contains("Sugar"));
+    }
+
+    @Test
+    void testGetIngredientsWithEmptyIngredients() {
+        // Arrange
+        List<String> ingredients = Arrays.asList();
+        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredients, false);
+
+        // Act
+        List<String> result = outputData.getIngredients();
+
+        // Assert
+        assertEquals(ingredients, result);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testGetIngredientsWithNullIngredients() {
+        // Arrange
+        List<String> ingredients = null;
+        ChangePreferenceOutputData outputData = new ChangePreferenceOutputData(ingredients, false);
+
+        // Act
+        List<String> result = outputData.getIngredients();
+
+        // Assert
+        assertNull(result);
     }
 }

@@ -1,25 +1,24 @@
 package view.ui_components.main_page;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Header Panel of the main page view.
  */
 public class HeaderPanel extends JPanel {
+    private static final int HGAP = 5;
+    private static final int VGAP = 5;
 
-    public HeaderPanel(String title, Component additionalComponent) {
-        setLayout(new BorderLayout());
+    public HeaderPanel(JButton searchButton, JButton exploreIngredientButton,
+                       JButton customRecipeButton, JButton userButton) {
+        setLayout(new FlowLayout(FlowLayout.RIGHT, HGAP, VGAP));
 
-        // Title label
-        final JLabel titleLabel = new JLabel(title, JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        add(titleLabel, BorderLayout.CENTER);
-
-        // Add additional component (e.g., button) to the right
-        if (additionalComponent != null) {
-            add(additionalComponent, BorderLayout.EAST);
-        }
+        add(exploreIngredientButton);
+        add(searchButton);
+        add(customRecipeButton);
+        add(userButton);
     }
 }

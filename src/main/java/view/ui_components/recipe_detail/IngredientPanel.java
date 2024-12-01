@@ -1,19 +1,31 @@
 package view.ui_components.recipe_detail;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import entities.recipe.Ingredient;
 import entities.recipe.Recipe;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
+import interface_adapter.recipe_detail.RecipeDetailState;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * Contains the ingredients of a recipe.
  */
-public class IngredientPanel extends JPanel {
-    final JPanel ingredientsListPanel;
+public class IngredientPanel extends AbstractViewDecorator<RecipeDetailState> {
+    public static final int HEADER_LABEL_FONT_SIZE = 18;
+    public static final int INGREDIENT_FONT_SIZE = 14;
+    private final JPanel ingredientsListPanel;
 
-    public IngredientPanel() {
+    public IngredientPanel(PageView<RecipeDetailState> view) {
+        super(view);
         ingredientsListPanel = new JPanel();
         ingredientsListPanel.setLayout(new BoxLayout(ingredientsListPanel, BoxLayout.Y_AXIS));
 
@@ -21,15 +33,17 @@ public class IngredientPanel extends JPanel {
         setBackground(Color.WHITE);
 
         final JLabel headerLabel = new JLabel("Ingredients:");
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        headerLabel.setFont(new Font("Arial", Font.BOLD, HEADER_LABEL_FONT_SIZE));
         add(headerLabel, BorderLayout.NORTH);
     }
 
-    /**
-     * Updates components.
-     * @param recipe the recipe entity.
-     */
-    public void updateComponents(Recipe recipe) {
+    @Override
+    public void update(RecipeDetailState state) {
+        super.update(state);
+        updateComponents(state.getRecipe());
+    }
+
+    private void updateComponents(Recipe recipe) {
         ingredientsListPanel.removeAll();
 
         final List<Ingredient> ingredients = recipe.getIngredients();
@@ -42,7 +56,7 @@ public class IngredientPanel extends JPanel {
                 if (ingredient != null && ingredient.getName() != null && !ingredient.getName().isEmpty()) {
                     final JCheckBox ingredientCheckBox = new JCheckBox(
                             ingredient.getName() + " - " + ingredient.getMeasure());
-                    ingredientCheckBox.setFont(new Font("Arial", Font.PLAIN, 14));
+                    ingredientCheckBox.setFont(new Font("Arial", Font.PLAIN, INGREDIENT_FONT_SIZE));
                     ingredientsListPanel.add(ingredientCheckBox);
                 }
             }

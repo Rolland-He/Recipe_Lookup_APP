@@ -11,9 +11,10 @@ public interface SearchRecipeDataAccessInterface {
     /**
      * Searches for recipes that matches the keyword.
      * @param keyword user query.
+     * @param ingredientsToAvoid the list of ingredients to avoid or filtered out.
      * @return a list of recipe.
      */
-    List<Recipe> searchRecipeByKeyword(String keyword);
+    List<Recipe> searchRecipeByKeyword(String keyword, List<String> ingredientsToAvoid);
 
     /**
      * Returns a recipe given the id input.
@@ -21,4 +22,11 @@ public interface SearchRecipeDataAccessInterface {
      * @return the recipe.
      */
     Recipe getRecipeById(int id);
+
+    /**
+     * Returns a list of recipes associated with each id.
+     * @param bookmarkedIds the list of recipe ids.
+     * @return a list of recipes.
+     */
+    List<Recipe> getRecipesByIdList(List<Integer> bookmarkedIds);
 }

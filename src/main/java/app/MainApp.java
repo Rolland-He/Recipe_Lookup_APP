@@ -1,13 +1,27 @@
 package app;
 
-import app.usecase_factory.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import app.usecase_factory.ChangePreferenceUseCaseFactory;
+import app.usecase_factory.CustomRecipeUseCaseFactory;
+import app.usecase_factory.ExploreIngredientUseCaseFactory;
+import app.usecase_factory.HomeUseCaseFactory;
+import app.usecase_factory.LoginUseCaseFactory;
+import app.usecase_factory.RecipeDetailUseCaseFactory;
+import app.usecase_factory.SearchRecipeUseCaseFactory;
+import app.usecase_factory.SignupUseCaseFactory;
+import app.usecase_factory.UserProfileUseCaseFactory;
 import data_access.CocktailDataAccessObject;
 import data_access.UserDataAccessObject;
-import entities.recipe.factory.CocktailFactory;
 import entities.recipe.factory.RecipeFactory;
 import entities.user.factory.CommonUserFactory;
 import entities.user.factory.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.custom_recipe.CustomRecipeViewModel;
 import interface_adapter.explore_ingredient.ExploreIngredientViewModel;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -21,16 +35,17 @@ import interface_adapter.services.image_service.WebImageService;
 import interface_adapter.services.video_service.VideoServiceInterface;
 import interface_adapter.services.video_service.WebVideoService;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.user_profile.UserProfileViewModel;
 import view.ExploreIngredientRecipeView;
+import view.PreferenceView;
 import view.RecipeDetailView;
 import view.SearchRecipeView;
 import view.ViewManager;
-import view.ViewPlaceholder.HomeView;
-import view.ViewPlaceholder.LoginView;
-import view.ViewPlaceholder.SignupView;
-
-import javax.swing.*;
-import java.awt.*;
+import view.views_placeholder.CustomRecipeView;
+import view.views_placeholder.HomeView;
+import view.views_placeholder.LoginView;
+import view.views_placeholder.SignupView;
+import view.views_placeholder.UserProfileView;
 
 /**
  * Main Application Interface.
@@ -43,6 +58,7 @@ public class MainApp {
     public static void main(String[] args) {
         final JFrame application = new JFrame("Recipe Lookup");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        application.setLayout(new BorderLayout());
 
         final CardLayout cardLayout = new CardLayout();
 
@@ -64,7 +80,7 @@ public class MainApp {
                 webVideoService);
 
         // Entity Factories
-        final RecipeFactory recipeFactory = new CocktailFactory();
+        final RecipeFactory recipeFactory = new RecipeFactory();
         final UserFactory userFactory = new CommonUserFactory();
 
         // api/database initialization
@@ -76,9 +92,11 @@ public class MainApp {
         final LoginViewModel loginViewModel = new LoginViewModel();
         final HomePageViewModel homePageViewModel = new HomePageViewModel();
         final ExploreIngredientViewModel exploreIngredientViewModel = new ExploreIngredientViewModel();
+        final UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
         final PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         final SearchRecipeViewModel searchRecipeViewModel = new SearchRecipeViewModel();
         final RecipeDetailViewModel recipeDetailViewModel = new RecipeDetailViewModel();
+        final CustomRecipeViewModel customRecipeViewModel = new CustomRecipeViewModel();
 
         // SignupView initialization
         final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
@@ -91,9 +109,15 @@ public class MainApp {
                 userDataAccessObject, cocktailDataAccessObject);
         views.add(loginView, loginView.getViewName());
 
+        final PreferenceView preferenceView = ChangePreferenceUseCaseFactory.create(
+                viewManagerModel, homePageViewModel, preferenceViewModel,
+                cocktailDataAccessObject, userDataAccessObject, serviceManager);
+        views.add(preferenceView, preferenceView.getViewName());
+
         // SearchRecipeView initialization
         final HomeView homeView = HomeUseCaseFactory.create(viewManagerModel,
                 homePageViewModel, searchRecipeViewModel, recipeDetailViewModel, exploreIngredientViewModel,
+                userProfileViewModel, customRecipeViewModel,
                 cocktailDataAccessObject, userDataAccessObject, serviceManager);
         views.add(homeView, homePageViewModel.getViewName());
 
@@ -103,7 +127,7 @@ public class MainApp {
         views.add(searchRecipeView, searchRecipeView.getViewName());
 
         final RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.create(viewManagerModel,
-                recipeDetailViewModel, searchRecipeViewModel,
+                recipeDetailViewModel, searchRecipeViewModel, homePageViewModel,
                 cocktailDataAccessObject, userDataAccessObject, serviceManager);
         views.add(recipeDetailView, recipeDetailView.getViewName());
 
@@ -112,6 +136,16 @@ public class MainApp {
                 homePageViewModel, searchRecipeViewModel, exploreIngredientViewModel,
                 cocktailDataAccessObject, serviceManager);
         views.add(exploreIngredientRecipeView, exploreIngredientRecipeView.getViewName());
+
+        final UserProfileView userProfileView = UserProfileUseCaseFactory.create(
+                viewManagerModel, userProfileViewModel, homePageViewModel, recipeDetailViewModel, preferenceViewModel,
+                userDataAccessObject, cocktailDataAccessObject, serviceManager);
+        views.add(userProfileView, userProfileView.getViewName());
+
+        final CustomRecipeView customRecipeView = CustomRecipeUseCaseFactory.create(
+                viewManagerModel, homePageViewModel, customRecipeViewModel, userProfileViewModel,
+                cocktailDataAccessObject, userDataAccessObject, serviceManager);
+        views.add(customRecipeView, customRecipeView.getViewName());
 
         // Handles what view model to be shown first
         viewManagerModel.setState(loginView.getViewName());

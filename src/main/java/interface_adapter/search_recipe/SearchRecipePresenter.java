@@ -1,14 +1,14 @@
 package interface_adapter.search_recipe;
 
-import interface_adapter.home_page.HomePageState;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.home_page.HomePageViewModel;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
-import use_case.view_recipe.ViewRecipeOutputBoundary;
-import use_case.view_recipe.ViewRecipeOutputData;
+import use_case.bookmark_recipe.BookmarkRecipeOutputData;
 import use_case.search_recipes.SearchRecipeOutputBoundary;
 import use_case.search_recipes.SearchRecipeOutputData;
-import interface_adapter.ViewManagerModel;
+import use_case.view_recipe.ViewRecipeOutputBoundary;
+import use_case.view_recipe.ViewRecipeOutputData;
 
 /**
  * The presenter for the search recipe use case.
@@ -33,6 +33,7 @@ public class SearchRecipePresenter implements SearchRecipeOutputBoundary, ViewRe
     public void prepareSuccessView(SearchRecipeOutputData outputData) {
         final SearchRecipeState searchRecipeState = searchRecipeViewModel.getState();
         searchRecipeState.setRecipes(outputData.getRecipes());
+        searchRecipeState.setQuery(outputData.getQuery());
 
         this.searchRecipeViewModel.setState(searchRecipeState);
         this.searchRecipeViewModel.firePropertyChanged();
@@ -60,6 +61,7 @@ public class SearchRecipePresenter implements SearchRecipeOutputBoundary, ViewRe
 
         this.searchRecipeViewModel.setState(searchRecipeState);
         this.searchRecipeViewModel.firePropertyChanged();
+        this.searchRecipeViewModel.firePropertyChanged("usecaseFailed");
 
         this.viewManagerModel.setState(searchRecipeViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
@@ -67,7 +69,7 @@ public class SearchRecipePresenter implements SearchRecipeOutputBoundary, ViewRe
 
     @Override
     public void prepareFailView(ViewRecipeOutputData outputData, String errorMessage) {
-        // TODO: Implement prepare fail view for viewing recipe detail use case.
+        // This case would most likely not fail.
     }
 
     @Override
@@ -77,7 +79,12 @@ public class SearchRecipePresenter implements SearchRecipeOutputBoundary, ViewRe
     }
 
     @Override
-    public void switchToHomePageView(SearchRecipeOutputData outputData) {
+    public void updateBookmarksView(BookmarkRecipeOutputData outputData) {
+
+    }
+
+    @Override
+    public void switchToHomePageView() {
         this.viewManagerModel.setState(homePageViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }

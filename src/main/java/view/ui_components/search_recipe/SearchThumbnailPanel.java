@@ -1,20 +1,28 @@
 package view.ui_components.search_recipe;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import entities.recipe.Recipe;
-import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.search_recipe.SearchRecipeController;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import interface_adapter.services.ServiceManager;
 import interface_adapter.services.image_service.ImageServiceInterface;
-
-import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Recipe Panel that shows when searching for recipes.
@@ -27,11 +35,14 @@ public class SearchThumbnailPanel extends JPanel {
     private static final int LEFT = 10;
     private static final int RIGHT = 10;
     private static final int FONT_SIZE = 14;
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 250;
+    private static final int BORDER_THICKNESS = 1;
 
     // Colors for modern button styling
-    private static final Color BUTTON_BACKGROUND = new Color(51, 122, 183);  // Nice blue
-    private static final Color BUTTON_HOVER = new Color(40, 96, 144);        // Darker blue for hover
-    private static final Color BUTTON_BORDER = new Color(46, 109, 164);      // Border blue
+    private static final Color BUTTON_BACKGROUND = new Color(51, 122, 183);
+    private static final Color BUTTON_HOVER = new Color(40, 96, 144);
+    private static final Color BUTTON_BORDER = new Color(46, 109, 164);
     private static final Color TEXT_COLOR = Color.WHITE;
 
     private JLabel imageLabel;
@@ -39,28 +50,25 @@ public class SearchThumbnailPanel extends JPanel {
 
     private final SearchRecipeController searchRecipeController;
     private final SearchRecipeViewModel searchRecipeViewModel;
-    private final RecipeDetailController recipeDetailController;
     private final ServiceManager serviceManager;
 
     public SearchThumbnailPanel(SearchRecipeViewModel searchRecipeViewModel,
                                 SearchRecipeController searchRecipeController,
-                                RecipeDetailController recipeDetailController,
                                 ServiceManager serviceManager) {
         this.serviceManager = serviceManager;
         this.searchRecipeController = searchRecipeController;
-        this.recipeDetailController = recipeDetailController;
         this.searchRecipeViewModel = searchRecipeViewModel;
         // Sets Layout
         setLayout(new BorderLayout(H_GAP, V_GAP));
         setBackground(Color.WHITE);
-        setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, BORDER_THICKNESS));
 
         // Initializes JComponents
         imageLabel = new JLabel();
         nameButton = createStyledButton();
 
         // Adjust the panel size
-        setPreferredSize(new Dimension(200, 250));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     private JButton createStyledButton() {
@@ -75,7 +83,7 @@ public class SearchThumbnailPanel extends JPanel {
 
         // Create rounded border with padding
         button.setBorder(new CompoundBorder(
-                new LineBorder(BUTTON_BORDER, 1, true),
+                new LineBorder(BUTTON_BORDER, BORDER_THICKNESS, true),
                 new EmptyBorder(TOP, LEFT, BOTTOM, RIGHT)
         ));
 

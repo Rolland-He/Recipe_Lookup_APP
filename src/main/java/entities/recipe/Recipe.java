@@ -8,25 +8,25 @@ import java.util.List;
 public interface Recipe {
 
     /**
-     * returns the name of the recipe.
+     * Returns the name of the recipe.
      * @return name of recipe.
      */
     String getName();
 
     /**
-     * returns the id of the recipe.
+     * Returns the id of the recipe.
      * @return id of recipe.
      */
     int getId();
 
     /**
-     * returns the instruction of recipe.
+     * Returns the instruction of recipe.
      * @return instruction of recipe.
      */
     String getInstruction();
 
     /**
-     * returns a list of ingredient.
+     * Returns a list of ingredient.
      * @return list of ingredient.
      */
     List<Ingredient> getIngredients();

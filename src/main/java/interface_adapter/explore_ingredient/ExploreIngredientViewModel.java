@@ -1,11 +1,6 @@
 package interface_adapter.explore_ingredient;
 
 import interface_adapter.ViewModel;
-import interface_adapter.home_page.HomePageState;
-import interface_adapter.search_recipe.SearchRecipeState;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 /**
  * View model for the explore ingredients usecase.

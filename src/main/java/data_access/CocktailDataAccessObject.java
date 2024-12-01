@@ -4,21 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.recipe.Ingredient;
-import entities.recipe.factory.RecipeFactory;
-import exceptions.IdentifierOverlap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import entities.recipe.Ingredient;
 import entities.recipe.Recipe;
-import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
-import use_case.random_recipes.RandomRecipeDataAccessInterface;
-import use_case.view_recipe.ViewRecipeDataAccessInterface;
-import use_case.search_recipes.SearchRecipeDataAccessInterface;
+import entities.recipe.factory.RecipeFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import use_case.explore_ingredient.ExploreIngredientDataAccessInterface;
+import use_case.login.RandomRecipeDataAccessInterface;
+import use_case.search_recipes.SearchRecipeDataAccessInterface;
+import use_case.view_recipe.ViewRecipeDataAccessInterface;
 
 /**
  * The Data Access Object for recipe api.
@@ -28,38 +27,36 @@ public class CocktailDataAccessObject implements
         ViewRecipeDataAccessInterface,
         RandomRecipeDataAccessInterface,
         ExploreIngredientDataAccessInterface {
-    private static final String API_URL = "http://thecocktaildb.com/api/json/v1/1";
+    private static final String COCKTAIL_API_URL = "http://thecocktaildb.com/api/json/v1/1";
     private static final int START = 1;
     private static final int END = 15;
-    private final RecipeFactory cocktailFactory;
+    private final RecipeFactory recipeFactory;
 
-    public CocktailDataAccessObject(RecipeFactory cocktailFactory) {
-        this.cocktailFactory = cocktailFactory;
+    public CocktailDataAccessObject(RecipeFactory recipeFactory) {
+        this.recipeFactory = recipeFactory;
     }
 
     @Override
-    public List<Recipe> searchRecipeByKeyword(String keyword) {
+    public List<Recipe> searchRecipeByKeyword(String keyword, List<String> ingredientsToAvoid) {
         // http://thecocktaildb.com/api/json/v1/1/search.php?s=margarita
         final List<Recipe> recipes = new ArrayList<>();
-        final JSONObject responseBody = makeApiRequest(String.format("%s/search.php?s=%s", API_URL, keyword));
+        final JSONObject responseBody = makeApiRequest(
+                String.format("%s/search.php?s=%s", COCKTAIL_API_URL, keyword));
         final JSONArray cocktails = getCocktails(responseBody);
 
         for (int i = 0; i < cocktails.length(); i++) {
             final JSONObject raw = cocktails.getJSONObject(i);
             recipes.add(createRecipe(raw));
         }
-
-        return recipes;
+        return filterRecipes(recipes, ingredientsToAvoid);
     }
 
     @Override
     public Recipe getRecipeById(int id) {
         // http://thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
-        final JSONObject responseBody = makeApiRequest(String.format("%s/lookup.php?i=%d", API_URL, id));
+        final JSONObject responseBody = makeApiRequest(
+                String.format("%s/lookup.php?i=%d", COCKTAIL_API_URL, id));
         final JSONArray cocktails = getCocktails(responseBody);
-        if (cocktails.length() != 1) {
-            throw new IdentifierOverlap("Multiple existing ids");
-        }
         final JSONObject raw = cocktails.getJSONObject(0);
         return createRecipe(raw);
     }
@@ -69,7 +66,8 @@ public class CocktailDataAccessObject implements
         final List<Recipe> recipes = new ArrayList<>();
 
         for (int i = 0; i < limit; i++) {
-            final JSONObject responseBody = makeApiRequest(String.format("%s/random.php", API_URL));
+            final JSONObject responseBody = makeApiRequest(
+                    String.format("%s/random.php", COCKTAIL_API_URL));
             final JSONArray cocktails = getCocktails(responseBody);
 
             final JSONObject raw = cocktails.getJSONObject(0);
@@ -80,16 +78,27 @@ public class CocktailDataAccessObject implements
     }
 
     @Override
+    public List<Recipe> getRecipesByIdList(List<Integer> bookmarkedRecipeIds) {
+        final List<Recipe> recipes = new ArrayList<>();
+
+        for (Integer recipeId: bookmarkedRecipeIds) {
+            recipes.add(getRecipeById(recipeId));
+        }
+
+        return recipes;
+    }
+
+    @Override
     public List<Recipe> exploreRecipeByIngredients(String ingredient) {
         // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
         final List<Recipe> recipes = new ArrayList<>();
-        final JSONObject responseBody = makeApiRequest(String.format("%s/filter.php?i=%s", API_URL, ingredient));
+        final JSONObject responseBody = makeApiRequest(
+                String.format("%s/filter.php?i=%s", COCKTAIL_API_URL, ingredient));
         final JSONArray cocktails = getCocktails(responseBody);
 
-        for (int i = 0; i < cocktails.length() && i < 10; i++) {
+        for (int i = 0; i < cocktails.length(); i++) {
             final JSONObject raw = cocktails.getJSONObject(i);
             final int recipeId = getRecipeId(raw);
-            System.out.println(recipeId);
             recipes.add(getRecipeById(recipeId));
         }
         return recipes;
@@ -99,7 +108,8 @@ public class CocktailDataAccessObject implements
     public List<String> getIngredientsList() {
         final List<String> ingredientsList = new ArrayList<>();
         // https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list
-        final JSONObject responseBody = makeApiRequest(String.format("%s/list.php?i=list", API_URL));
+        final JSONObject responseBody = makeApiRequest(
+                String.format("%s/list.php?i=list", COCKTAIL_API_URL));
         final JSONArray ingredients = getCocktails(responseBody);
 
         for (int i = 0; i < ingredients.length(); i++) {
@@ -109,6 +119,24 @@ public class CocktailDataAccessObject implements
         }
 
         return ingredientsList;
+    }
+
+    private List<Recipe> filterRecipes(List<Recipe> recipes, List<String> ingredientsToAvoid) {
+        final List<Recipe> result = new ArrayList<>();
+        for (Recipe recipe: recipes) {
+            final List<Ingredient> ingredients = recipe.getIngredients();
+            boolean isContained = false;
+            for (Ingredient ingredient: ingredients) {
+                if (ingredientsToAvoid.contains(ingredient.getName())) {
+                    isContained = true;
+                    break;
+                }
+            }
+            if (!isContained) {
+                result.add(recipe);
+            }
+        }
+        return result;
     }
 
     // getCocktails and getIngredientByIdentifier might return null.
@@ -135,7 +163,12 @@ public class CocktailDataAccessObject implements
         final String videoLink = getVideoLink(raw);
         final String isAlcoholic = getIsAlcoholic(raw);
 
-        return cocktailFactory.create(name, id, instruction, ingredients, imageLink, videoLink, isAlcoholic);
+        return recipeFactory.create(name, id, instruction, ingredients,
+                imageLink, videoLink, isAlcoholic, "cocktail");
+    }
+
+    private String getIsAlcoholic(JSONObject raw) {
+        return raw.optString("strAlcoholic", "");
     }
 
     private String getRecipeName(JSONObject raw) {
@@ -154,10 +187,6 @@ public class CocktailDataAccessObject implements
         return raw.getString("strDrinkThumb");
     }
 
-    private String getIsAlcoholic(JSONObject raw) {
-        return raw.getString("strAlcoholic");
-    }
-
     private List<Ingredient> getIngredients(JSONObject raw) {
         final List<Ingredient> ingredients = new ArrayList<>();
         for (int i = START; i <= END; i++) {
@@ -172,7 +201,7 @@ public class CocktailDataAccessObject implements
         return ingredients;
     }
 
-    protected JSONObject makeApiRequest(String apiUrl) throws JSONException {
+    private JSONObject makeApiRequest(String apiUrl) throws JSONException {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         final Request request = new Request.Builder()

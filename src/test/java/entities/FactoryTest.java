@@ -1,8 +1,7 @@
 package entities;
 
 import entities.recipe.*;
-import entities.recipe.factory.CocktailFactory;
-import entities.recipe.factory.MealFactory;
+import entities.recipe.factory.RecipeFactory;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -13,14 +12,17 @@ class CocktailRecipeTest {
     void testConstructorAndGetters() {
         // Arrange
         String name = "Mojito";
-        int id = 123;
+        int id = 11000;
         String instruction = "Mix all ingredients";
         List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("Rum", "60ml"),
-                new Ingredient("Mint", "4 leaves")
+                new Ingredient("Light rum", "2-3 oz "),
+                new Ingredient("Lime", "Juice of 1 "),
+                new Ingredient("Sugar", "2 tsp "),
+                new Ingredient("Mint", "2-4 "),
+                new Ingredient("Soda Water", "")
         );
-        String imageLink = "image.jpg";
-        String videoLink = "video.mp4";
+        String imageLink = "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg";
+        String videoLink = "";
         String isAlcoholic = "Alcoholic";
 
         // Act
@@ -35,7 +37,7 @@ class CocktailRecipeTest {
         assertEquals(imageLink, recipe.getImageLink());
         assertEquals(videoLink, recipe.getVideoLink());
         assertEquals(isAlcoholic, recipe.getIsAlcoholic());
-        assertEquals("Name: Mojito\nIngredients: " + ingredients.toString(), recipe.toString());
+        assertEquals("Name: Mojito", recipe.toString());
     }
 
     @Test
@@ -61,64 +63,7 @@ class CocktailRecipeTest {
         assertNull(recipe.getImageLink());
         assertNull(recipe.getVideoLink());
         assertNull(recipe.getIsAlcoholic());
-        assertEquals("Name: null\nIngredients: null", recipe.toString());
-    }
-}
-
-class MealRecipeTest {
-    @Test
-    void testConstructorAndGetters() {
-        // Arrange
-        String name = "Pasta";
-        int id = 456;
-        String instruction = "Boil pasta";
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("Pasta", "500g"),
-                new Ingredient("Salt", "1 tsp")
-        );
-        String imageLink = "pasta.jpg";
-        String videoLink = "pasta.mp4";
-        String isAlcoholic = "Non-Alcoholic";
-
-        // Act
-        MealRecipe recipe = new MealRecipe(name, id, instruction, ingredients,
-                imageLink, videoLink, isAlcoholic);
-
-        // Assert
-        assertEquals(name, recipe.getName());
-        assertEquals(id, recipe.getId());
-        assertEquals(instruction, recipe.getInstruction());
-        assertEquals(ingredients, recipe.getIngredients());
-        assertEquals(imageLink, recipe.getImageLink());
-        assertEquals(videoLink, recipe.getVideoLink());
-        assertEquals(isAlcoholic, recipe.getIsAlcoholic());
-        assertEquals("Name: Pasta\nIngredients: " + ingredients.toString(), recipe.toString());
-    }
-
-    @Test
-    void testConstructorWithNullValues() {
-        // Arrange
-        String name = null;
-        int id = 0;
-        String instruction = null;
-        List<Ingredient> ingredients = null;
-        String imageLink = null;
-        String videoLink = null;
-        String isAlcoholic = null;
-
-        // Act
-        MealRecipe recipe = new MealRecipe(name, id, instruction, ingredients,
-                imageLink, videoLink, isAlcoholic);
-
-        // Assert
-        assertNull(recipe.getName());
-        assertEquals(0, recipe.getId());
-        assertNull(recipe.getInstruction());
-        assertNull(recipe.getIngredients());
-        assertNull(recipe.getImageLink());
-        assertNull(recipe.getVideoLink());
-        assertNull(recipe.getIsAlcoholic());
-        assertEquals("Name: null\nIngredients: null", recipe.toString());
+        assertEquals("Name: null", recipe.toString());
     }
 }
 
@@ -154,45 +99,11 @@ class IngredientTest {
     }
 }
 
-class SimpleRecipeTest {
-    @Test
-    void testConstructorAndGetters() {
-        // Arrange
-        String name = "Simple Recipe";
-        int id = 789;
-        String imageLink = "simple.jpg";
-
-        // Act
-        SimpleRecipe recipe = new SimpleRecipe(name, id, imageLink);
-
-        // Assert
-        assertEquals(name, recipe.getName());
-        assertEquals(id, recipe.getId());
-        assertEquals(imageLink, recipe.getImageLink());
-    }
-
-    @Test
-    void testConstructorWithNullValues() {
-        // Arrange
-        String name = null;
-        int id = 0;
-        String imageLink = null;
-
-        // Act
-        SimpleRecipe recipe = new SimpleRecipe(name, id, imageLink);
-
-        // Assert
-        assertNull(recipe.getName());
-        assertEquals(0, recipe.getId());
-        assertNull(recipe.getImageLink());
-    }
-}
-
 class CocktailFactoryTest {
     @Test
     void testCreate() {
         // Arrange
-        CocktailFactory factory = new CocktailFactory();
+        RecipeFactory factory = new RecipeFactory();
         String name = "Margarita";
         int id = 123;
         String instruction = "Mix tequila";
@@ -206,7 +117,7 @@ class CocktailFactoryTest {
 
         // Act
         Recipe recipe = factory.create(name, id, instruction, ingredients,
-                imageLink, videoLink, isAlcoholic);
+                imageLink, videoLink, isAlcoholic, "cocktail");
 
         // Assert
         assertInstanceOf(CocktailRecipe.class, recipe);
@@ -218,36 +129,29 @@ class CocktailFactoryTest {
         assertEquals(videoLink, recipe.getVideoLink());
         assertEquals(isAlcoholic, recipe.getIsAlcoholic());
     }
-}
 
-class MealFactoryTest {
     @Test
-    void testCreate() {
+    void testCreateInvalidType() {
         // Arrange
-        MealFactory factory = new MealFactory();
-        String name = "Pizza";
-        int id = 456;
-        String instruction = "Bake in oven";
+        RecipeFactory factory = new RecipeFactory();
+        String name = "Margarita";
+        int id = 123;
+        String instruction = "Mix tequila";
         List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("Flour", "500g"),
-                new Ingredient("Tomato", "2 pieces")
+                new Ingredient("Tequila", "60ml"),
+                new Ingredient("Lime", "1 piece")
         );
-        String imageLink = "pizza.jpg";
-        String videoLink = "pizza.mp4";
-        String isAlcoholic = "Non-Alcoholic";
+        String imageLink = "margarita.jpg";
+        String videoLink = "margarita.mp4";
+        String isAlcoholic = "Alcoholic";
+        String invalidType = "unknown";
 
-        // Act
-        Recipe recipe = factory.create(name, id, instruction, ingredients,
-                imageLink, videoLink, isAlcoholic);
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                factory.create(name, id, instruction, ingredients, imageLink, videoLink, isAlcoholic, invalidType)
+        );
 
-        // Assert
-        assertInstanceOf(CocktailRecipe.class, recipe);  // Note: This seems like a bug in MealFactory
-        assertEquals(name, recipe.getName());
-        assertEquals(id, recipe.getId());
-        assertEquals(instruction, recipe.getInstruction());
-        assertEquals(ingredients, recipe.getIngredients());
-        assertEquals(imageLink, recipe.getImageLink());
-        assertEquals(videoLink, recipe.getVideoLink());
-        assertEquals(isAlcoholic, recipe.getIsAlcoholic());
+        assertEquals("Invalid type of recipe", exception.getMessage());
     }
 }
+

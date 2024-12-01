@@ -2,7 +2,6 @@ package interface_adapter.recipe_detail;
 
 import entities.recipe.Recipe;
 
-
 /**
  * The state information regarding the recipe detail use case.
  */

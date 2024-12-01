@@ -3,9 +3,10 @@ package use_case.explore_ingredient;
 import java.util.List;
 
 import entities.recipe.Recipe;
-import entities.recipe.SimpleRecipe;
-import entities.recipe.Ingredient;
 
+/**
+ * Explores recipes by ingredients DAO.
+ */
 public interface ExploreIngredientDataAccessInterface {
     /**
      * Gets a simplified list of recipes containing the specified ingredient.
@@ -17,8 +18,8 @@ public interface ExploreIngredientDataAccessInterface {
 
     /**
      * Gets the list of available ingredients.
-     * @return list of ingredients (conventionally, a string)
      * As this ingredient filter does not account for the measurement for all drinks with ingredient.
+     * @return list of ingredients (conventionally, a string)
      */
     List<String> getIngredientsList();
 }

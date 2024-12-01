@@ -1,40 +1,47 @@
 package view.ui_components.search_recipe;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import entities.recipe.Recipe;
-import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.search_recipe.SearchRecipeController;
+import interface_adapter.search_recipe.SearchRecipeState;
 import interface_adapter.search_recipe.SearchRecipeViewModel;
 import interface_adapter.services.ServiceManager;
+import view.AbstractViewDecorator;
+import view.PageView;
 
 /**
  * Recipe Scroll Panel that shows the recipe in a scrollable grid panel.
  */
-public class ThumbnailsContainerPanel extends JPanel {
+public class ThumbnailsContainerPanel extends AbstractViewDecorator<SearchRecipeState> {
     private static final int ROW = 0;
-    private static final int COL = 2;
+    private static final int COL = 3;
     private static final int H_GAP = 10;
     private static final int V_GAP = 10;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 400;
 
     private final JPanel recipePanel;
     private final SearchRecipeController searchRecipeController;
     private final SearchRecipeViewModel searchRecipeViewModel;
-    private final RecipeDetailController recipeDetailController;
     private final ServiceManager serviceManager;
 
     public ThumbnailsContainerPanel(SearchRecipeViewModel searchRecipeViewModel,
                                     SearchRecipeController searchRecipeController,
-                                    RecipeDetailController recipeDetailController,
-                                    ServiceManager serviceManager) {
+                                    ServiceManager serviceManager, PageView<SearchRecipeState> pageView) {
+        super(pageView);
         this.serviceManager = serviceManager;
         this.searchRecipeController = searchRecipeController;
         this.searchRecipeViewModel = searchRecipeViewModel;
-        this.recipeDetailController = recipeDetailController;
         // Set layout for main panel
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -57,17 +64,19 @@ public class ThumbnailsContainerPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         // Set panel properties
-        scrollPane.setPreferredSize(new Dimension(600, 400));
+        scrollPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         // Add initial empty state
         clearRecipes();
     }
 
-    /**
-     * Updates the recipe scroll panel with the new recipes.
-     * @param recipes a list of Recipe.
-     */
-    public void displayRecipes(List<Recipe> recipes) {
+    @Override
+    public void update(SearchRecipeState state) {
+        super.getTempPage().update(state);
+        displayRecipes(state.getRecipes());
+    }
+
+    private void displayRecipes(List<Recipe> recipes) {
         recipePanel.removeAll();
         // Reset to grid layout
         recipePanel.setLayout(new GridLayout(ROW, COL, H_GAP, V_GAP));
@@ -98,8 +107,7 @@ public class ThumbnailsContainerPanel extends JPanel {
         final List<JPanel> panels = new ArrayList<>();
         for (Recipe recipe : recipes) {
             final SearchThumbnailPanel srp = new SearchThumbnailPanel(
-                    searchRecipeViewModel, searchRecipeController, recipeDetailController,
-                    serviceManager);
+                    searchRecipeViewModel, searchRecipeController, serviceManager);
             srp.addRecipe(recipe);
             panels.add(srp);
         }

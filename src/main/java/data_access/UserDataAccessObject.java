@@ -1,29 +1,30 @@
 package data_access;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-
+import data_access.exceptions.RecipeNotFound;
+import data_access.exceptions.UserNotFound;
 import entities.recipe.Ingredient;
 import entities.recipe.Recipe;
-import entities.recipe.factory.CocktailFactory;
 import entities.recipe.factory.RecipeFactory;
 import entities.user.User;
-import entities.user.factory.CommonUserFactory;
 import entities.user.factory.UserFactory;
-import exceptions.RecipeNotFound;
-import exceptions.UserNotFound;
-import org.bson.Document;
 import use_case.bookmark_recipe.BookmarkRecipeDataAccessInterface;
+import use_case.change_preference.ChangePreferenceDataAccessInterface;
 import use_case.create_recipe.CustomRecipeDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupDataAccessInterface;
-
-import java.util.List;
-import java.util.Random;
+import use_case.user_profile.UserProfileDataAccessInterface;
 
 /**
  * The Data Access Object for users.
@@ -32,7 +33,9 @@ public class UserDataAccessObject implements
         LoginDataAccessInterface,
         SignupDataAccessInterface,
         BookmarkRecipeDataAccessInterface,
-        CustomRecipeDataAccessInterface {
+        CustomRecipeDataAccessInterface,
+        UserProfileDataAccessInterface,
+        ChangePreferenceDataAccessInterface {
     private static final String ACCESS_USERNAME = "appUser";
     private static final String ACCESS_PASSWORD = "myPassword123";
     private static final String CONNECTION_URL = String.format("mongodb+srv://%s:%s@cluster0.dvuik.mongodb.net/",
@@ -57,8 +60,12 @@ public class UserDataAccessObject implements
     private static final String INGREDIENTS = "ingredients";
     private static final String MEASUREMENTS = "measurements";
     private static final String INSTRUCTIONS = "instructions";
+    private static final String IS_ALCOHOLIC = "isAlcoholic";
     private static final int MIN_BOUND = 1;
     private static final int MAX_BOUND = 20000;
+    private static final int THREE = 3;
+    private static final int SIX = 6;
+    private static final String KEY_ID = "_id";
 
     private final UserFactory userFactory;
     private final RecipeFactory recipeFactory;
@@ -113,18 +120,46 @@ public class UserDataAccessObject implements
     }
 
     @Override
+    public void changeIngredientsToAvoid(String username, List<String> ingredientsToAvoid) {
+        if (!existsByName(username)) {
+            throw new UserNotFound(username);
+        }
+        final MongoDatabase database = mongoClient.getDatabase(RECIPE_DATABASE_NAME);
+        final MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION_NAME);
+
+        // Filter to find the document
+        final Document filter = new Document(USERNAME, username);
+
+        // New array to replace the existing array
+        final Document update = new Document("$set", new Document(INGREDIENTS_TO_AVOID, ingredientsToAvoid));
+
+        // Update the document
+        usersCollection.updateOne(filter, update);
+
+    }
+
+    @Override
     public String getCurrentUser() {
         return currentUser;
     }
 
     @Override
-    public List<Integer> getIngredientsToAvoid(String username) {
+    public List<String> getIngredientsToAvoid(String username) {
         final MongoDatabase database = mongoClient.getDatabase(RECIPE_DATABASE_NAME);
         final MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION_NAME);
         final Document foundUser = usersCollection.find(Filters.eq(USERNAME, username)).first();
 
-        return foundUser.getList(INGREDIENTS_TO_AVOID, Integer.class, List.of());
+        return foundUser.getList(INGREDIENTS_TO_AVOID, String.class, List.of());
 
+    }
+
+    @Override
+    public List<Integer> getBookmarkedRecipes(String username) {
+        final MongoDatabase database = mongoClient.getDatabase(RECIPE_DATABASE_NAME);
+        final MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION_NAME);
+        final Document foundUser = usersCollection.find(Filters.eq(USERNAME, username)).first();
+
+        return foundUser.getList(BOOKMARKED_RECIPE_IDS, Integer.class, List.of());
     }
 
     @Override
@@ -132,11 +167,12 @@ public class UserDataAccessObject implements
         final String username = user.getName();
         final String password = user.getPassword();
 
-        if (!validatePassword(password) || !validateUsername(username)) {
-            return;
-        }
         if (existsByName(username)) {
-            return;
+            throw new UserNotFound(username);
+        }
+
+        if (!validatePassword(password) || !validateUsername(username)) {
+            throw new IllegalArgumentException("Need stronger password");
         }
         final MongoDatabase database = mongoClient.getDatabase(RECIPE_DATABASE_NAME);
 
@@ -147,7 +183,7 @@ public class UserDataAccessObject implements
                     .append(PASSWORD, password)
                     .append(BOOKMARKED_RECIPE_IDS, List.of())
                     .append(CREATED_RECIPES, List.of())
-                    .append(INGREDIENTS_TO_AVOID, List.of(1, 2, 3));
+                    .append(INGREDIENTS_TO_AVOID, List.of());
 
         // Insert the document into the collection
         usersCollection.insertOne(newUser);
@@ -157,11 +193,11 @@ public class UserDataAccessObject implements
     // TODO: Implement these methods to ensure that inputs are valid.
     //  such that: empty strings are not accepted. Change the filler codes below
     private boolean validateUsername(String username) {
-        return username.length() >= 3;
+        return username.length() >= THREE;
     }
 
     private boolean validatePassword(String password) {
-        return password.length() >= 6;
+        return password.length() >= SIX;
     }
 
     @Override
@@ -203,7 +239,9 @@ public class UserDataAccessObject implements
     }
 
     @Override
-    public void createCustomRecipe(String username, Recipe recipe) {
+    public void createCustomRecipe(String username, String recipeName,
+                                         String recipeInstruction, List<String> ingredients,
+                                         List<String> measurements, String isAlcoholic) {
         if (!existsByName(username)) {
             throw new UserNotFound(username);
         }
@@ -211,18 +249,19 @@ public class UserDataAccessObject implements
         final MongoCollection<Document> recipesCollection = database.getCollection(RECIPES_COLLECTION_NAME);
 
         // Creates the recipe in recipe collection.
-        final Document customMongoRecipe = new Document(RECIPE_NAME, recipe.getName())
-                    .append(RECIPE_ID, generateRandomId())
-                    .append(INGREDIENTS, getIngredients(recipe))
-                    .append(MEASUREMENTS, getMeasurements(recipe))
-                    .append(INSTRUCTIONS, recipe.getInstruction());
+        final Document customMongoRecipe = new Document(RECIPE_NAME, recipeName)
+                .append(RECIPE_ID, generateRandomId())
+                .append(INGREDIENTS, ingredients)
+                .append(MEASUREMENTS, measurements)
+                .append(INSTRUCTIONS, recipeInstruction)
+                .append(IS_ALCOHOLIC, isAlcoholic);
         recipesCollection.insertOne(customMongoRecipe);
 
         // adds a reference to the created recipe.
         final MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION_NAME);
         final Document filter = new Document(USERNAME, username);
         final Document update = new Document(
-                "$push", new Document(CREATED_RECIPES, customMongoRecipe.getObjectId("_id")));
+                "$push", new Document(CREATED_RECIPES, customMongoRecipe.getObjectId(KEY_ID)));
         usersCollection.updateOne(filter, update);
 
     }
@@ -244,7 +283,7 @@ public class UserDataAccessObject implements
         final Document userFilter = new Document(
                 USERNAME, username);
         final Document userUpdate = new Document("$pull", new Document(
-                CREATED_RECIPES, customRecipe.getObjectId("_id")));
+                CREATED_RECIPES, customRecipe.getObjectId(KEY_ID)));
         usersCollection.updateOne(userFilter, userUpdate);
         // Removes the recipe from the recipe collection
         recipesCollection.deleteOne(Filters.eq(RECIPE_ID, id));
@@ -252,15 +291,39 @@ public class UserDataAccessObject implements
 
     @Override
     public List<Recipe> getCustomRecipes(String username) {
-        return List.of();
+        if (!existsByName(username)) {
+            throw new UserNotFound(username);
+        }
+
+        final MongoDatabase database = mongoClient.getDatabase(RECIPE_DATABASE_NAME);
+        final MongoCollection<Document> usersCollection = database.getCollection(USERS_COLLECTION_NAME);
+        final MongoCollection<Document> recipesCollection = database.getCollection(RECIPES_COLLECTION_NAME);
+
+        final Document foundUser = usersCollection.find(Filters.eq(USERNAME, username)).first();
+
+        final List<ObjectId> createdRecipeIds = foundUser.getList(CREATED_RECIPES, ObjectId.class, List.of());
+        final List<Recipe> results = new ArrayList<>();
+
+        for (ObjectId recipeObjectId : createdRecipeIds) {
+            final Document recipeObject = recipesCollection.find(Filters.eq(KEY_ID, recipeObjectId)).first();
+            final int recipeId = recipeObject.getInteger(RECIPE_ID);
+            results.add(getRecipeById(recipeId));
+        }
+
+        return results;
     }
 
-    private List<String> getMeasurements(Recipe recipe) {
-        return null;
-    }
+    private List<Ingredient> getIngredientsEntity(Document recipeObject) {
+        final List<Ingredient> result = new ArrayList<>();
+        final List<String> ingredients = recipeObject.getList(INGREDIENTS, String.class, List.of());
+        final List<String> measurements = recipeObject.getList(MEASUREMENTS, String.class, List.of());
+        for (int i = 0; i < ingredients.size(); i++) {
+            final String ingredient = ingredients.get(i);
+            final String measurement = measurements.get(i);
+            result.add(new Ingredient(ingredient, measurement));
+        }
 
-    private List<String> getIngredients(Recipe recipe) {
-        return null;
+        return result;
     }
 
     private int generateRandomId() {
@@ -289,22 +352,20 @@ public class UserDataAccessObject implements
         return false;
     }
 
-    public static void main(String[] args) {
-        final UserFactory userFactory1 = new CommonUserFactory();
-        final RecipeFactory recipeFactory1 = new CocktailFactory();
-        final UserDataAccessObject userDataAccessObject = new UserDataAccessObject(
-                userFactory1, recipeFactory1);
+    @Override
+    public Recipe getRecipeById(int recipeId) {
+        final MongoDatabase database = mongoClient.getDatabase(RECIPE_DATABASE_NAME);
+        final MongoCollection<Document> recipesCollection = database.getCollection(RECIPES_COLLECTION_NAME);
+        final Document recipeObject = recipesCollection.find(Filters.eq(RECIPE_ID, recipeId)).first();
+        final String recipeName = recipeObject.getString(RECIPE_NAME);
+        final String recipeInstruction = recipeObject.getString(INSTRUCTIONS);
+        final List<Ingredient> recipeIngredients = getIngredientsEntity(recipeObject);
+        final String recipeIsAlcoholic = recipeObject.getString(IS_ALCOHOLIC);
 
-        final Recipe recipeExample = recipeFactory1.create(
-                "Ice water baby",
-                0,
-                "Put them in a freezer or something lmao.",
-                List.of(new Ingredient("H2O", "Maybe one cup")),
-                "",
-                "",
-                ""
-                );
-        userDataAccessObject.createCustomRecipe("shin", recipeExample);
-        //userDataAccessObject.removeCustomRecipe("shin", 2605);
+        return recipeFactory.create(recipeName, recipeId,
+                recipeInstruction, recipeIngredients,
+                "https://ih1.redbubble.net/image.2198823670.6447/st,small,507x507-pad,600x600,f8f8f8.jpg",
+                "", recipeIsAlcoholic, "cocktail");
+
     }
 }

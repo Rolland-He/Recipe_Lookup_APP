@@ -1,6 +1,6 @@
 package interface_adapter.services.image_service;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 /**
  * Fetches or retrieves image from local storage.

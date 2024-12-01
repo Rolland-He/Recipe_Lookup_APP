@@ -6,6 +6,7 @@ package use_case.search_recipes;
 public interface SearchRecipeOutputBoundary {
     /**
      * Prepares the success view for the Search Recipe Use Case.
+     * To be specific, it shows the search results.
      * @param outputData the output data
      */
     void prepareSuccessView(SearchRecipeOutputData outputData);
@@ -19,7 +20,6 @@ public interface SearchRecipeOutputBoundary {
 
     /**
      * Switches to the home page view.
-     * @param outputData the output data (which we will need to keep the search text persistent).
      */
-    void switchToHomePageView(SearchRecipeOutputData outputData);
+    void switchToHomePageView();
 }

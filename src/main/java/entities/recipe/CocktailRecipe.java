@@ -48,7 +48,7 @@ public class CocktailRecipe implements Recipe {
 
     @Override
     public String toString() {
-        return String.format("Name: %s\nIngredients: %s", name, ingredients);
+        return String.format("Name: %s", name);
     }
 
     @Override
@@ -62,5 +62,8 @@ public class CocktailRecipe implements Recipe {
     }
 
     @Override
-    public String getIsAlcoholic() {return isAlcoholic;}
+    public String getIsAlcoholic() {
+        return isAlcoholic;
+    }
+
 }

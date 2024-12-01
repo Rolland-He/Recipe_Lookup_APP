@@ -12,7 +12,7 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import view.ViewPlaceholder.LoginView;
+import view.views_placeholder.LoginView;
 
 /**
  * Factory for the login usecase.
@@ -29,6 +29,7 @@ public final class LoginUseCaseFactory {
      * @param homePageViewModel the HomePageViewModel to be injected into the view.
      * @param preferenceViewModel the PreferenceViewModel to be injected into the view.
      * @param userDataAccessObject the user DAO to be injected into the view.
+     * @param cocktailDataAccessObject the cocktail DAO to be injected into the view.
      * @return the login view.
      */
     public static LoginView create(ViewManagerModel viewManagerModel,
