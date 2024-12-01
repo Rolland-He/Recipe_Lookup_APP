@@ -1,6 +1,9 @@
 package view.ui_components.main_page;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.BorderFactory;
