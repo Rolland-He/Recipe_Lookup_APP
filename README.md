@@ -77,6 +77,7 @@ Designed with accessibility in mind, the app provides seamless navigation and in
 ### Feedback and Contribution
 We welcome feedback to improve the app! If you encounter any issues or have suggestions, please contact us at:  
 📧 **rolland.he@mail.utoronto.ca**
+📧 **alexandar.zhang@mail.utoronto.ca**
 
 Optional contributions are also welcome. Feel free to fork the repository and submit pull requests for review.
 
