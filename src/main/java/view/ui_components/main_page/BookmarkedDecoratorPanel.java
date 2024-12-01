@@ -1,8 +1,6 @@
 package view.ui_components.main_page;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -27,6 +25,7 @@ public class BookmarkedDecoratorPanel extends AbstractViewDecorator<HomePageStat
     private static final int LAYOUT_GAP = 10;
     private static final int BORDER_SIZE = 10;
     private static final int GRID_COLUMNS = 3;
+    private static final int HEADER_FONT_SIZE = 20;
 
     private final JPanel gridPanel;
 
@@ -50,6 +49,7 @@ public class BookmarkedDecoratorPanel extends AbstractViewDecorator<HomePageStat
         setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
 
         final JLabel headerLabel = new JLabel("Bookmarked Recipes", SwingConstants.CENTER);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, HEADER_FONT_SIZE));
         add(headerLabel, BorderLayout.NORTH);
 
         gridPanel = new JPanel(new GridLayout(0, GRID_COLUMNS, LAYOUT_GAP, LAYOUT_GAP));

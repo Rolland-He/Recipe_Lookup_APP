@@ -1,11 +1,9 @@
 package view.ui_components.user_profile;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 import entities.recipe.Recipe;
 import interface_adapter.services.ServiceManager;
@@ -21,16 +19,13 @@ import view.PageView;
  * This class is not expected to be null.
  */
 public class CustomRecipePanel extends AbstractViewDecorator<UserProfileState> {
-
-    private static final Color BACKGROUND_COLOR = new Color(211, 211, 211);
-    private static final Color BORDER_COLOR = new Color(169, 169, 169);
-    private static final int BORDER_THICKNESS = 2;
-    private static final String FONT_NAME = "SansSerif";
-    private static final int FONT_STYLE = Font.BOLD;
-    private static final int FONT_SIZE = 14;
+    private static final int LAYOUT_GAP = 10;
+    private static final int BORDER_SIZE = 10;
+    private static final int GRID_COLUMNS = 3;
+    private static final int HEADER_FONT_SIZE = 20;
     private static final String PANEL_TITLE = "Custom Recipe";
 
-    private final JScrollPane scrollPane;
+    private final JPanel gridPanel;
     private final UserProfileViewModel userProfileViewModel;
     private final UserProfileController userProfileController;
     private final ServiceManager serviceManager;
@@ -44,31 +39,28 @@ public class CustomRecipePanel extends AbstractViewDecorator<UserProfileState> {
         this.userProfileController = userProfileController;
         this.serviceManager = serviceManager;
 
-        setBackground(BACKGROUND_COLOR);
-        setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(BORDER_COLOR, BORDER_THICKNESS),
-                PANEL_TITLE,
-                0,
-                0,
-                new Font(FONT_NAME, FONT_STYLE, FONT_SIZE),
-                Color.DARK_GRAY
-        ));
+        // Recommendations section
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBackground(Color.WHITE);
 
-        scrollPane = new JScrollPane(this,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    }
+        setLayout(new BorderLayout(LAYOUT_GAP, LAYOUT_GAP));
+        setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
 
-    public JScrollPane getScrollPane() {
-        return scrollPane;
+        final JLabel headerLabel = new JLabel(PANEL_TITLE, SwingConstants.CENTER);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, HEADER_FONT_SIZE));
+        add(headerLabel, BorderLayout.NORTH);
+
+        gridPanel = new JPanel(new GridLayout(0, GRID_COLUMNS, LAYOUT_GAP, LAYOUT_GAP));
+        final JScrollPane scrollPane = new JScrollPane(gridPanel);
+
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     @Override
     public void update(UserProfileState state) {
         super.getTempPage().update(state);
-        removeAll();
+        gridPanel.removeAll();
         final List<Recipe> createdRecipes = state.getCreatedRecipes();
-
         for (Recipe recipe : createdRecipes) {
             final UserProfileRecipeThumbnailPanel customRecipePanel = new UserProfileRecipeThumbnailPanel(
                     userProfileViewModel,
@@ -77,7 +69,7 @@ public class CustomRecipePanel extends AbstractViewDecorator<UserProfileState> {
             );
 
             customRecipePanel.addRecipe(recipe);
-            add(customRecipePanel);
+            gridPanel.add(customRecipePanel);
         }
     }
 }

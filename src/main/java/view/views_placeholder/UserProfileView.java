@@ -61,7 +61,7 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         returnButton.addActionListener(event -> userProfileController.switchToHomePage());
 
         add(userIconPanel, BorderLayout.NORTH);
-        add(customRecipePanel.getScrollPane(), BorderLayout.CENTER);
+        add(customRecipePanel, BorderLayout.CENTER);
         add(returnButtonPanel, BorderLayout.SOUTH);
     }
 
