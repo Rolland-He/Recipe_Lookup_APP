@@ -1,6 +1,7 @@
 package use_case;
 
 import entities.recipe.Recipe;
+import interface_adapter.custom_recipe.CustomRecipePresenter;
 import interface_adapter.explore_ingredient.ExploreIngredientPresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ class ExploreIngredientInteractorTest {
     private ExploreIngredientDataAccessInterface dataAccess;
     private ExploreIngredientPresenter presenter;
     private ExploreIngredientInteractor interactor;
+    private CustomRecipePresenter mockPresenter;
 
     @BeforeEach
     void setUp() {
@@ -70,6 +72,15 @@ class ExploreIngredientInteractorTest {
         verify(presenter).prepareIngredientsListView(argThat(data ->
                 data.getIngredientsList().size() == 3 && !data.isUseCaseFailed()
         ));
+    }
+
+    @Test
+    void testSwitchToHomePageView() {
+        // Act
+        interactor.switchToHomePageView();
+
+        // Assert
+        verify(mockPresenter, times(1)).switchToHomePageView();
     }
 }
 

@@ -29,4 +29,5 @@ public class SearchRecipeOutputData {
     public String getQuery() {
         return query;
     }
+
 }
