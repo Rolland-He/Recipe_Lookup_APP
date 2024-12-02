@@ -12,6 +12,7 @@ import use_case.search_recipes.SearchRecipeInteractor;
 import use_case.search_recipes.SearchRecipeOutputData;
 import use_case.view_recipe.ViewRecipeInputData;
 import use_case.bookmark_recipe.BookmarkRecipeDataAccessInterface;
+import use_case.view_recipe.ViewRecipeOutputData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,13 +115,31 @@ class SearchRecipeInteractorTest {
 
         // Act
         interactor.execute(new ViewRecipeInputData(recipeId));
-
         // Assert
-        verify(recipePresenterMock).prepareFailView(argThat((SearchRecipeOutputData outputData) ->
-                outputData.getRecipes() == null &&
-                       // !outputData.isBookmarked() &&
-                        outputData.isUseCaseFailed()
+        verify(recipePresenterMock).prepareFailView(
+                argThat((ViewRecipeOutputData outputData) ->
+                outputData.getRecipe() == null &&
+                        outputData.isUseCaseFailed() &&
+                        !outputData.isBookmarked()
         ), eq("Recipe not found."));
+    }
+
+    @Test
+    void testExecuteRecipeSuccess() {
+        int recipeId = 11000;
+        String username = "testUser";
+        CocktailRecipe recipe = new CocktailRecipe("Mojito", recipeId, "Mix ingredients",
+                null, null, null, "Alcoholic");
+        when(bookmarkDataAccessMock.getCurrentUser()).thenReturn(username);
+        when(bookmarkDataAccessMock.isBookmarked(username, recipeId)).thenReturn(true);
+        when(recipeDataAccessMock.getRecipeById(recipeId)).thenReturn(recipe);
+
+        interactor.execute(new ViewRecipeInputData(recipeId));
+
+        verify(recipePresenterMock).prepareSuccessView(argThat((ViewRecipeOutputData outputData) ->
+                outputData.getRecipe() == recipe &&
+                outputData.isBookmarked() &&
+                !outputData.isUseCaseFailed()));
     }
 
     @Test
